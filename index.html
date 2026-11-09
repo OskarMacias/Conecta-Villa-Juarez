@@ -562,8 +562,9 @@
             { id: 165, name: "Distribuidora Terramar / Mary Kay / Avon", category: "VJ38", phone: "6672337885", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.6576, lng: -107.5386, desc: "Venta de productos de belleza y cosméticos.", menuImg: "", expireDate: "2026-12-31" }
         ];
 
+        // Forzar actualización si la estructura cambió
         let businesses = JSON.parse(localStorage.getItem("vj_businesses"));
-        if (!businesses || businesses.length === 0) {
+        if (!businesses || businesses.length < defaultBusinesses.length) {
             businesses = defaultBusinesses;
             localStorage.setItem("vj_businesses", JSON.stringify(defaultBusinesses));
         }
@@ -698,7 +699,7 @@
                         keywordMatch = catObj.keywords.some(kw => searchVal.includes(kw) || kw.includes(searchVal));
                     }
 
-                    // Búsqueda dividida por palabras individuales (ej. buscar "nieves toppings" o "ricos tacos")
+                    // Búsqueda dividida por palabras individuales
                     const searchTerms = searchVal.split(/\s+/);
                     const splitMatch = searchTerms.every(term => 
                         name.includes(term) || 
@@ -817,6 +818,7 @@
                 document.getElementById("clientView").classList.add("hidden");
                 document.getElementById("adminView").classList.remove("hidden");
                 renderAdminTable();
+                document.getElementById("btnAdminView").classList.add("bg-emerald-700");
             } else { 
                 alert("Contraseña incorrecta."); 
             }
@@ -825,6 +827,7 @@
         function logoutAdmin() {
             isAdminLoggedIn = false;
             localStorage.removeItem("vj_is_admin");
+            document.getElementById("btnAdminView").classList.remove("bg-emerald-700");
             switchView('client');
         }
 
