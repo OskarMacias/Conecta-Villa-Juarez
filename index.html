@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Directorio Villa Juárez - Servicios y Negocios</title>
+    
+    <!-- 🚫 ETIQUETAS ANTI-CACHÉ -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -613,13 +619,11 @@
         }
 
         function initOnlineCounter() {
-            // Genera un número realista de personas conectadas en línea basado en la hora actual
-            let onlineBase = Math.floor(Math.random() * 4) + 2; // entre 2 y 5 base
+            let onlineBase = Math.floor(Math.random() * 4) + 2; 
             document.getElementById("onlineCount").innerText = onlineBase;
             
-            // Simula ligeras variaciones de usuarios en línea cada pocos segundos
             setInterval(() => {
-                let variation = Math.floor(Math.random() * 3) - 1; // -1, 0 o +1
+                let variation = Math.floor(Math.random() * 3) - 1; 
                 onlineBase = Math.max(1, onlineBase + variation);
                 document.getElementById("onlineCount").innerText = onlineBase;
             }, 8000);
