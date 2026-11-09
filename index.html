@@ -65,7 +65,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, servicio (Ej. Uber, nieves)..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, descripción (Ej. nieves, tacos)..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 </div>
                 <div>
                     <select id="categoryFilter" onchange="filterServices()" class="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
@@ -276,7 +276,7 @@
     
     <script>
         const categories = [
-            { id: "VJ01", name: "VJ01 🌮 Taquerías", keywords: ["taco", "tacos", "taqueria", "taquerias"] },
+            { id: "VJ01", name: "VJ01 🌮 Taquerías", keywords: ["taco", "tacos", "taqueria", "taquerias", "quesadilla", "quesadillas"] },
             { id: "VJ02", name: "VJ02 🍔 Hamburguesas, Hot Dogs y Tortas", keywords: ["hamburguesa", "hamburguesas", "hot dog", "hotdog", "torta", "tortas", "lonche", "burger"] },
             { id: "VJ03", name: "VJ03 🕯️ Gas / Gasero", keywords: ["gas", "gasero", "gaspasa", "hidrogas", "sonigas", "cilindro"] },
             { id: "VJ04", name: "VJ04 📡 Internet y Wi-Fi", keywords: ["internet", "wifi", "telmex", "infinitum", "enlace", "intersin"] },
@@ -320,8 +320,8 @@
         const baseLng = -107.538643;
 
         const defaultBusinesses = [
-            { id: 1, name: "Taquería Takotote", category: "VJ01", phone: "6673123979", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.657617, lng: -107.538643, desc: "Taquería tradicional con excelente sazón.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 2, name: "Taquería El Güero", category: "VJ01", phone: "6671430687", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.6580, lng: -107.5392, desc: "Abierto todos los días.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 1, name: "Taquería Takotote", category: "VJ01", phone: "6673123979", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.657617, lng: -107.538643, desc: "Taquería tradicional con excelente sazón, tacos y quesadillas.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 2, name: "Taquería El Güero", category: "VJ01", phone: "6671430687", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.6580, lng: -107.5392, desc: "Abierto todos los días, tacos.", menuImg: "", expireDate: "2026-12-31" },
             { id: 3, name: "Tacos La Antena", category: "VJ01", phone: "6671962909", hours: "Lunes a Domingo | 1:00 pm a 11:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.6572, lng: -107.5378, desc: "Tacos con gran sazón.", menuImg: "", expireDate: "2026-12-31" },
             { id: 4, name: "Taquería Don Noel", category: "VJ01", phone: "6674647304", hours: "Miércoles a Domingo | 3:00 pm a 11:00 pm", address: "Atrás de Dulcería Beny", lat: 24.6585, lng: -107.5398, desc: "Servicio a domicilio.", menuImg: "", expireDate: "2026-12-31" },
             { id: 5, name: "Taquería Yessi", category: "VJ01", phone: "6674860404", hours: "Viernes a Domingo | 4:00 pm a 12:00 am", address: "Villa Juárez, Sinaloa", lat: 24.6568, lng: -107.5372, desc: "Fines de semana.", menuImg: "", expireDate: "2026-12-31" },
@@ -684,26 +684,31 @@
                 
                 let matchSearch = true;
                 if(searchVal !== "") {
-                    const nameMatch = biz.name.toLowerCase().includes(searchVal);
-                    const descMatch = biz.desc.toLowerCase().includes(searchVal);
-                    const addrMatch = biz.address.toLowerCase().includes(searchVal);
-                    const catNameMatch = catObj && catObj.name.toLowerCase().includes(searchVal);
+                    const name = (biz.name || "").toLowerCase();
+                    const desc = (biz.desc || "").toLowerCase();
+                    const addr = (biz.address || "").toLowerCase();
+                    const catName = catObj ? catObj.name.toLowerCase() : "";
                     
+                    // Comprobar coincidencias directas en nombre, descripción, dirección o categoría
+                    const directMatch = name.includes(searchVal) || desc.includes(searchVal) || addr.includes(searchVal) || catName.includes(searchVal);
+
+                    // Comprobar palabras clave de la categoría o términos similares (tacos, quesadillas, nieves, etc.)
                     let keywordMatch = false;
                     if(catObj && catObj.keywords) {
-                        keywordMatch = catObj.keywords.some(kw => searchVal.includes(kw) || kw.includes(searchVal) || nameMatch || descMatch);
+                        keywordMatch = catObj.keywords.some(kw => searchVal.includes(kw) || kw.includes(searchVal));
                     }
-                    
-                    // Búsqueda inteligente por similitud / aproximación de palabras
-                    const searchTerms = searchVal.split(" ");
-                    const fuzzyMatch = searchTerms.every(term => 
-                        biz.name.toLowerCase().includes(term) || 
-                        biz.desc.toLowerCase().includes(term) || 
-                        (catObj && catObj.name.toLowerCase().includes(term)) ||
+
+                    // Búsqueda dividida por palabras individuales (ej. buscar "nieves toppings" o "ricos tacos")
+                    const searchTerms = searchVal.split(/\s+/);
+                    const splitMatch = searchTerms.every(term => 
+                        name.includes(term) || 
+                        desc.includes(term) || 
+                        addr.includes(term) || 
+                        catName.includes(term) ||
                         (catObj && catObj.keywords && catObj.keywords.some(k => k.includes(term)))
                     );
 
-                    matchSearch = nameMatch || descMatch || addrMatch || catNameMatch || keywordMatch || fuzzyMatch;
+                    matchSearch = directMatch || keywordMatch || splitMatch;
                 }
 
                 return matchSearch && matchCat;
