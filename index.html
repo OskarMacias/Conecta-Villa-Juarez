@@ -8,31 +8,31 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        #map { height: 320px; width: 100%; border-radius: 0.75rem; z-index: 10; }
-        #modalMap { height: 220px; width: 100%; border-radius: 0.75rem; z-index: 10; }
+        #map { height: 300px; width: 100%; border-radius: 0.75rem; z-index: 10; }
+        #modalMap { height: 200px; width: 100%; border-radius: 0.75rem; z-index: 10; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
 
     <!-- HEADER -->
     <header class="bg-emerald-600 text-white shadow-md sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-            <div>
-                <h1 class="text-xl font-bold flex items-center gap-2">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="text-center sm:text-left">
+                <h1 class="text-lg sm:text-xl font-bold flex items-center justify-center sm:justify-start gap-2">
                     <i class="fa-solid fa-store"></i> Directorio Villa Juárez
                 </h1>
                 <p class="text-xs text-emerald-100">CP 80378 | Navolato, Sinaloa</p>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center justify-center gap-2 w-full sm:w-auto">
                 <!-- CONTADOR DE VISITAS -->
-                <div class="bg-emerald-700 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-emerald-500 shadow-inner">
+                <div class="bg-emerald-700 text-emerald-100 px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-emerald-500 shadow-inner">
                     <i class="fa-solid fa-eye text-emerald-300"></i>
                     <span>Visitas: <strong id="visitorCount" class="text-white">0</strong></span>
                 </div>
-                <button onclick="switchView('client')" id="btnClientView" class="bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm">
+                <button onclick="switchView('client')" id="btnClientView" class="bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm">
                     <i class="fa-solid fa-users"></i> Directorio
                 </button>
-                <button onclick="openAdminLogin()" id="btnAdminView" class="bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500">
+                <button onclick="openAdminLogin()" id="btnAdminView" class="bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500">
                     <i class="fa-solid fa-lock"></i> Admin
                 </button>
             </div>
@@ -40,7 +40,7 @@
     </header>
 
     <!-- MAIN -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 space-y-6">
+    <main class="flex-grow max-w-6xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
 
         <!-- BANNER DE PUBLICIDAD / PROMOCIÓN DINÁMICO -->
         <div id="promoBannerContainer" class="hidden rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white">
@@ -48,27 +48,27 @@
         </div>
 
         <!-- VISTA CLIENTE -->
-        <div id="clientView" class="space-y-6">
-            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-4 text-white shadow flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div id="clientView" class="space-y-4 sm:space-y-6">
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-4 text-white shadow flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
                 <div>
-                    <h2 class="font-bold text-lg">📲 ¿Quieres anunciar tu negocio en esta lista?</h2>
-                    <p class="text-sm text-emerald-100">Contáctanos vía WhatsApp para aparecer en el directorio oficial de Villa Juárez.</p>
+                    <h2 class="font-bold text-base sm:text-lg">📲 ¿Quieres anunciar tu negocio en esta lista?</h2>
+                    <p class="text-xs sm:text-sm text-emerald-100 mt-1">Contáctanos vía WhatsApp para aparecer en el directorio oficial de Villa Juárez.</p>
                 </div>
-                <a href="https://wa.me/526672337885?text=Hola,%20quiero%20anunciar%20mi%20negocio%20en%20el%20directorio%20de%20Villa%20Juárez" target="_blank" class="bg-white text-emerald-700 px-4 py-2 rounded-lg font-bold text-sm shadow hover:bg-emerald-50 transition whitespace-nowrap">
+                <a href="https://wa.me/526672337885?text=Hola,%20quiero%20anunciar%20mi%20negocio%20en%20el%20directorio%20de%20Villa%20Juárez" target="_blank" class="bg-white text-emerald-700 px-4 py-2 rounded-lg font-bold text-xs sm:text-sm shadow hover:bg-emerald-50 transition whitespace-nowrap">
                     <i class="fa-brands fa-whatsapp"></i> 667 233 7885
                 </a>
             </div>
 
             <!-- Buscador y Filtros -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, descripción (Ej. nuvy, nieves)..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, descripción..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm">
                 </div>
                 <div>
-                    <select id="categoryFilter" onchange="filterServices()" class="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    <select id="categoryFilter" onchange="filterServices()" class="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-xs sm:text-sm">
                         <option value="">📁 Todas las Categorías (VJ01 - VJ38)</option>
                     </select>
                 </div>
@@ -77,8 +77,8 @@
             <!-- Mapa Interactivo Colapsable -->
             <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200">
                 <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-sm font-semibold text-slate-700 flex items-center gap-1">
-                        <i class="fa-solid fa-map-location-dot text-emerald-600"></i> Mapa de Villa Juárez, Navolato, Sinaloa (CP 80378)
+                    <h3 class="text-xs sm:text-sm font-semibold text-slate-700 flex items-center gap-1">
+                        <i class="fa-solid fa-map-location-dot text-emerald-600"></i> Mapa de Villa Juárez, Sinaloa (CP 80378)
                     </h3>
                     <button onclick="toggleMap()" id="mapToggleBtn" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg font-medium">Ocultar Mapa</button>
                 </div>
@@ -89,49 +89,49 @@
 
             <!-- Listado -->
             <div>
-                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center justify-between">
-                    <span>Negocios y Servicios Disponibles</span>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-800">Negocios y Servicios Disponibles</h3>
                     <span id="counterBadge" class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">0 servicios</span>
-                </h3>
-                <div id="servicesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+                <div id="servicesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"></div>
             </div>
         </div>
 
         <!-- VISTA ADMINISTRADOR -->
-        <div id="adminView" class="hidden space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200 gap-4">
+        <div id="adminView" class="hidden space-y-4 sm:space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200 gap-3">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-800">Panel de Administración</h2>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-800">Panel de Administración</h2>
                     <p class="text-xs text-slate-500">Gestión de suscripciones, publicidad superior y ubicaciones.</p>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="openPromoModal()" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-1">
-                        <i class="fa-solid fa-bullhorn"></i> Gestionar Publicidad
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                    <button onclick="openPromoModal()" class="flex-1 sm:flex-none bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg text-xs sm:text-sm font-medium shadow flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-bullhorn"></i> Publicidad
                     </button>
-                    <button onclick="openPasswordModal()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-1">
-                        <i class="fa-solid fa-key"></i> Cambiar Contraseña
+                    <button onclick="openPasswordModal()" class="flex-1 sm:flex-none bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg text-xs sm:text-sm font-medium shadow flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-key"></i> Clave
                     </button>
-                    <button onclick="openBusinessModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-1">
-                        <i class="fa-solid fa-plus"></i> Nuevo Negocio
+                    <button onclick="openBusinessModal()" class="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-xs sm:text-sm font-medium shadow flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-plus"></i> Nuevo
                     </button>
-                    <button onclick="logoutAdmin()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-2 rounded-lg text-sm font-medium">Salir</button>
+                    <button onclick="logoutAdmin()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium">Salir</button>
                 </div>
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
                         <thead>
                             <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-semibold border-b border-slate-200">
                                 <th class="p-3">Negocio</th>
                                 <th class="p-3">Categoría</th>
                                 <th class="p-3">Teléfono</th>
-                                <th class="p-3">Vencimiento Suscripción</th>
+                                <th class="p-3">Vencimiento</th>
                                 <th class="p-3">Estado</th>
                                 <th class="p-3 text-right">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="adminTableBody" class="divide-y divide-slate-200 text-sm"></tbody>
+                        <tbody id="adminTableBody" class="divide-y divide-slate-200 text-xs sm:text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -139,9 +139,9 @@
     </main>
 
     <!-- MODAL DETALLE -->
-    <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative">
-            <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 p-2 rounded-full w-9 h-9 flex items-center justify-center">
+    <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl p-4 sm:p-6 relative">
+            <button onclick="closeDetailModal()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 bg-slate-100 p-2 rounded-full w-8 h-8 flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div id="modalContent"></div>
@@ -149,16 +149,16 @@
     </div>
 
     <!-- MODAL ADMIN FORM -->
-    <div id="businessModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative">
-            <h3 id="modalTitle" class="text-lg font-bold text-slate-800 mb-4">Registrar / Editar Negocio</h3>
-            <form id="businessForm" onsubmit="saveBusiness(event)" class="space-y-4 text-sm">
+    <div id="businessModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-4 sm:p-6 relative">
+            <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-slate-800 mb-3">Registrar / Editar Negocio</h3>
+            <form id="businessForm" onsubmit="saveBusiness(event)" class="space-y-3 text-xs sm:text-sm">
                 <input type="hidden" id="bizId">
                 <div>
                     <label class="block font-medium text-slate-700 mb-1">Nombre del Negocio</label>
                     <input type="text" id="bizName" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">Categoría</label>
                         <select id="bizCategory" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"></select>
@@ -170,11 +170,11 @@
                 </div>
                 <div>
                     <label class="block font-medium text-slate-700 mb-1">Horario</label>
-                    <input type="text" id="bizHours" placeholder="Ej. Lunes a Domingo" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    <input type="text" id="bizHours" placeholder="Ej. Lunes a Domingo" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none">
                 </div>
                 <div>
                     <label class="block font-medium text-slate-700 mb-1">Ubicación / Dirección</label>
-                    <input type="text" id="bizAddress" placeholder="Villa Juárez, Sinaloa" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    <input type="text" id="bizAddress" placeholder="Villa Juárez, Sinaloa" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none">
                 </div>
 
                 <!-- SELECCIÓN DE UBICACIÓN EN MAPA -->
@@ -183,13 +183,13 @@
                     <div id="modalMap" class="mb-2 border border-slate-300"></div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">Latitud (Mapa)</label>
+                        <label class="block font-medium text-slate-700 mb-1">Latitud</label>
                         <input type="number" step="any" id="bizLat" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg">
                     </div>
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">Longitud (Mapa)</label>
+                        <label class="block font-medium text-slate-700 mb-1">Longitud</label>
                         <input type="number" step="any" id="bizLng" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg">
                     </div>
                 </div>
@@ -215,59 +215,59 @@
 
     <!-- MODAL CAMBIAR CONTRASEÑA -->
     <div id="passwordModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <h3 class="text-lg font-bold text-slate-800">Cambiar Contraseña</h3>
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-3">
+            <h3 class="text-base font-bold text-slate-800">Cambiar Contraseña</h3>
             <div>
                 <label class="block text-xs font-medium text-slate-700 mb-1">Nueva Contraseña</label>
-                <input type="password" id="newPasswordInput" placeholder="Nueva contraseña" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+                <input type="password" id="newPasswordInput" placeholder="Nueva contraseña" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm">
             </div>
             <div class="flex justify-end gap-2">
-                <button onclick="closePasswordModal()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm">Cancelar</button>
-                <button onclick="saveNewPassword()" class="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm">Guardar</button>
+                <button onclick="closePasswordModal()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs">Cancelar</button>
+                <button onclick="saveNewPassword()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs">Guardar</button>
             </div>
         </div>
     </div>
 
     <!-- MODAL GESTIONAR PUBLICIDAD -->
     <div id="promoModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
-            <h3 class="text-lg font-bold text-slate-800">Gestionar Banner Publicitario (Superior)</h3>
+        <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl space-y-3">
+            <h3 class="text-base font-bold text-slate-800">Gestionar Banner Publicitario (Superior)</h3>
             <div>
                 <label class="block text-xs font-medium text-slate-700 mb-1">Tipo de Contenido</label>
-                <select id="promoType" onchange="togglePromoInputs()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+                <select id="promoType" onchange="togglePromoInputs()" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm">
                     <option value="none">Sin Publicidad (Oculto)</option>
                     <option value="image">Imagen (URL)</option>
-                    <option value="video">Video (URL MP4 o enlace directo)</option>
+                    <option value="video">Video (URL MP4)</option>
                     <option value="html">Texto / HTML Personalizado</option>
                 </select>
             </div>
             <div id="promoUrlContainer" class="hidden">
                 <label class="block text-xs font-medium text-slate-700 mb-1">Enlace del Archivo (URL de Imagen o Video)</label>
-                <input type="url" id="promoUrl" placeholder="https://ejemplo.com/imagen.jpg" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+                <input type="url" id="promoUrl" placeholder="https://..." class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm">
             </div>
             <div id="promoHtmlContainer" class="hidden">
                 <label class="block text-xs font-medium text-slate-700 mb-1">Código HTML o Texto del Anuncio</label>
-                <textarea id="promoHtmlText" rows="3" placeholder="Escribe tu anuncio aquí..." class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm"></textarea>
+                <textarea id="promoHtmlText" rows="3" placeholder="Escribe tu anuncio..." class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm"></textarea>
             </div>
             <div>
                 <label class="block text-xs font-medium text-slate-700 mb-1">Enlace de Destino al hacer clic (Opcional)</label>
-                <input type="url" id="promoLink" placeholder="https://wa.me/..." class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+                <input type="url" id="promoLink" placeholder="https://wa.me/..." class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm">
             </div>
             <div class="flex justify-end gap-2">
-                <button onclick="closePromoModal()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm">Cancelar</button>
-                <button onclick="savePromoBanner()" class="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm">Guardar Publicidad</button>
+                <button onclick="closePromoModal()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs">Cancelar</button>
+                <button onclick="savePromoBanner()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs">Guardar</button>
             </div>
         </div>
     </div>
 
     <!-- MODAL LOGIN -->
     <div id="loginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <h3 class="text-lg font-bold text-slate-800">Acceso Administrador</h3>
-            <input type="password" id="adminPasswordInput" placeholder="Contraseña" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-3">
+            <h3 class="text-base font-bold text-slate-800">Acceso Administrador</h3>
+            <input type="password" id="adminPasswordInput" placeholder="Contraseña" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs sm:text-sm">
             <div class="flex justify-end gap-2">
-                <button onclick="closeAdminLogin()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm">Cancelar</button>
-                <button onclick="verifyAdminPassword()" class="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm">Entrar</button>
+                <button onclick="closeAdminLogin()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs">Cancelar</button>
+                <button onclick="verifyAdminPassword()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs">Entrar</button>
             </div>
         </div>
     </div>
@@ -562,7 +562,6 @@
             { id: 165, name: "Distribuidora Terramar / Mary Kay / Avon", category: "VJ38", phone: "6672337885", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.6576, lng: -107.5386, desc: "Venta de productos de belleza y cosméticos.", menuImg: "", expireDate: "2026-12-31" }
         ];
 
-        // Forzar actualización total limpiando localStorage si es necesario
         let businesses = JSON.parse(localStorage.getItem("vj_businesses"));
         if (!businesses || businesses.length < defaultBusinesses.length) {
             businesses = defaultBusinesses;
@@ -656,11 +655,11 @@
             let innerHtml = "";
 
             if(promoConfig.type === "image") {
-                innerHtml = `<img src="${promoConfig.url}" class="w-full max-h-48 sm:max-h-64 object-cover">`;
+                innerHtml = `<img src="${promoConfig.url}" class="w-full max-h-40 sm:max-h-56 object-cover">`;
             } else if(promoConfig.type === "video") {
-                innerHtml = `<video src="${promoConfig.url}" autoplay muted loop playsinline class="w-full max-h-48 sm:max-h-64 object-cover"></video>`;
+                innerHtml = `<video src="${promoConfig.url}" autoplay muted loop playsinline class="w-full max-h-40 sm:max-h-56 object-cover"></video>`;
             } else if(promoConfig.type === "html") {
-                innerHtml = `<div class="p-4 bg-emerald-50 text-emerald-900 font-medium text-center">${promoConfig.html}</div>`;
+                innerHtml = `<div class="p-3 sm:p-4 bg-emerald-50 text-emerald-900 font-medium text-center text-xs sm:text-sm">${promoConfig.html}</div>`;
             }
 
             if(promoConfig.link) {
@@ -670,7 +669,6 @@
             }
         }
 
-        // Función auxiliar para quitar acentos, diéresis y unificar texto de búsqueda
         function normalizeText(text) {
             return (text || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
@@ -694,7 +692,6 @@
                     const desc = normalizeText(biz.desc);
                     const addr = normalizeText(biz.address);
                     
-                    // Búsqueda insensible a acentos, diéresis (ü por u, á por a, etc.)
                     const searchTerms = searchVal.split(/\s+/);
                     matchSearch = searchTerms.every(term => 
                         name.includes(term) || 
@@ -709,7 +706,7 @@
             document.getElementById("counterBadge").innerText = `${filtered.length} servicios`;
 
             if(filtered.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400"><p class="text-sm">No se encontraron negocios con esos criterios.</p></div>`;
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400"><p class="text-xs sm:text-sm">No se encontraron negocios con esos criterios.</p></div>`;
                 return;
             }
 
@@ -717,19 +714,19 @@
                 const catObj = categories.find(c => c.id === biz.category);
                 const catName = catObj ? catObj.name : biz.category;
                 container.innerHTML += `
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 hover:shadow-md transition flex flex-col justify-between">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3.5 sm:p-4 hover:shadow-md transition flex flex-col justify-between">
                         <div>
-                            <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-full">${catName}</span>
-                            <h4 class="font-bold text-base text-slate-800 mt-2">${biz.name}</h4>
-                            <p class="text-xs text-slate-500 mt-1 flex items-center gap-1"><i class="fa-solid fa-location-dot text-emerald-600"></i> ${biz.address || 'Villa Juárez, Sinaloa (CP 80378)'}</p>
+                            <span class="text-[10px] sm:text-xs bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 sm:py-1 rounded-full inline-block">${catName}</span>
+                            <h4 class="font-bold text-sm sm:text-base text-slate-800 mt-2">${biz.name}</h4>
+                            <p class="text-[11px] sm:text-xs text-slate-500 mt-1 flex items-center gap-1"><i class="fa-solid fa-location-dot text-emerald-600"></i> ${biz.address || 'Villa Juárez, Sinaloa'}</p>
                             <p class="text-xs text-slate-600 mt-2 line-clamp-2">${biz.desc || 'Servicio disponible.'}</p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                            <a href="tel:${biz.phone}" class="text-xs font-bold text-emerald-600 hover:underline flex items-center gap-1">
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                            <a href="tel:${biz.phone}" class="text-xs font-bold text-emerald-600 hover:underline flex items-center gap-1 truncate">
                                 <i class="fa-solid fa-phone"></i> ${biz.phone}
                             </a>
-                            <button onclick="openDetailModal(${biz.id})" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium shadow-sm">
-                                Ver Menú / Info
+                            <button onclick="openDetailModal(${biz.id})" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] sm:text-xs px-3 py-1.5 rounded-lg font-medium shadow-sm whitespace-nowrap">
+                                Ver Más
                             </button>
                         </div>
                     </div>
@@ -745,31 +742,30 @@
             if(!biz) return;
             const catObj = categories.find(c => c.id === biz.category);
             const catName = catObj ? catObj.name : biz.category;
-
             const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${biz.lat},${biz.lng}`;
 
             document.getElementById("modalContent").innerHTML = `
-                <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-full">${catName}</span>
-                <h3 class="text-xl font-bold text-slate-900 mt-2">${biz.name}</h3>
-                <p class="text-sm text-slate-600 mt-1"><i class="fa-solid fa-clock text-emerald-600 mr-1"></i> ${biz.hours || 'Consultar horarios'}</p>
-                <p class="text-sm text-slate-600 mt-1"><i class="fa-solid fa-location-dot text-emerald-600 mr-1"></i> ${biz.address || 'Villa Juárez, Sinaloa (CP 80378)'}</p>
-                <p class="text-sm text-slate-700 mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200">${biz.desc || 'Sin descripción adicional.'}</p>
+                <span class="text-[10px] sm:text-xs bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded-full inline-block">${catName}</span>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-900 mt-2">${biz.name}</h3>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1"><i class="fa-solid fa-clock text-emerald-600 mr-1"></i> ${biz.hours || 'Consultar horarios'}</p>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1"><i class="fa-solid fa-location-dot text-emerald-600 mr-1"></i> ${biz.address || 'Villa Juárez, Sinaloa'}</p>
+                <p class="text-xs sm:text-sm text-slate-700 mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200">${biz.desc || 'Sin descripción adicional.'}</p>
                 
                 ${biz.lat && biz.lng ? `
-                    <div class="mt-4">
-                        <a href="${mapsUrl}" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2.5 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-diamond-turn-right"></i> Llegar aquí (Abrir en Maps)
+                    <div class="mt-3">
+                        <a href="${mapsUrl}" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 rounded-xl font-bold text-xs sm:text-sm shadow flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-diamond-turn-right"></i> Abrir en Google Maps
                         </a>
                     </div>
                 ` : ''}
 
-                ${biz.menuImg ? `<div class="mt-4"><img src="${biz.menuImg}" class="w-full rounded-xl border border-slate-200 max-h-60 object-cover"></div>` : ''}
+                ${biz.menuImg ? `<div class="mt-3"><img src="${biz.menuImg}" class="w-full rounded-xl border border-slate-200 max-h-48 object-cover"></div>` : ''}
                 
-                <div class="mt-6 flex gap-2">
-                    <a href="tel:${biz.phone}" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center py-2.5 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2">
+                <div class="mt-4 flex flex-col sm:flex-row gap-2">
+                    <a href="tel:${biz.phone}" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow flex items-center justify-center gap-2">
                         <i class="fa-solid fa-phone"></i> Llamar
                     </a>
-                    <a href="https://wa.me/52${biz.phone.replace(/\D/g,'')}?text=Hola,%20vi%20su%20negocio%20en%20el%20Directorio%20de%20Villa%20Juárez." target="_blank" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white text-center py-2.5 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2">
+                    <a href="https://wa.me/52${biz.phone.replace(/\D/g,'')}?text=Hola,%20vi%20su%20negocio%20en%20el%20Directorio%20de%20Villa%20Juárez." target="_blank" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white text-center py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow flex items-center justify-center gap-2">
                         <i class="fa-brands fa-whatsapp"></i> WhatsApp
                     </a>
                 </div>
@@ -783,8 +779,8 @@
             if(view === 'client') {
                 document.getElementById("clientView").classList.remove("hidden");
                 document.getElementById("adminView").classList.add("hidden");
-                document.getElementById("btnClientView").className = "bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm";
-                document.getElementById("btnAdminView").className = "bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500";
+                document.getElementById("btnClientView").className = "bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm";
+                document.getElementById("btnAdminView").className = "bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500";
             }
         }
 
@@ -827,14 +823,11 @@
 
         function saveNewPassword() {
             const newPass = document.getElementById("newPasswordInput").value.trim();
-            if(!newPass) {
-                alert("Escribe una contraseña válida.");
-                return;
-            }
+            if(!newPass) { alert("Escribe una contraseña válida."); return; }
             adminPassword = newPass;
             localStorage.setItem("vj_admin_pass", newPass);
             closePasswordModal();
-            alert("¡Contraseña actualizada con éxito!");
+            alert("¡Contraseña actualizada!");
         }
 
         function openPromoModal() {
@@ -868,7 +861,7 @@
             localStorage.setItem("vj_promo", JSON.stringify(promoConfig));
             closePromoModal();
             renderPromoBanner();
-            alert("¡Publicidad actualizada con éxito!");
+            alert("¡Publicidad actualizada!");
         }
 
         function renderAdminTable() {
@@ -884,10 +877,10 @@
                         <td class="p-3 text-slate-600 text-xs">${catObj ? catObj.name : biz.category}</td>
                         <td class="p-3 text-slate-600">${biz.phone}</td>
                         <td class="p-3 font-mono text-xs">${biz.expireDate}</td>
-                        <td class="p-3">${isExpired ? '<span class="bg-red-100 text-red-700 text-xs px-2.5 py-1 rounded-full font-semibold">Oculto</span>' : '<span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-semibold">Visible</span>'}</td>
-                        <td class="p-3 text-right space-x-2">
-                            <button onclick="editBusiness(${biz.id})" class="text-blue-600 bg-blue-50 px-2.5 py-1.5 rounded-lg text-xs">Editar</button>
-                            <button onclick="deleteBusiness(${biz.id})" class="text-red-600 bg-red-50 px-2.5 py-1.5 rounded-lg text-xs">Eliminar</button>
+                        <td class="p-3">${isExpired ? '<span class="bg-red-100 text-red-700 text-[10px] px-2 py-0.5 rounded-full font-semibold">Oculto</span>' : '<span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-semibold">Visible</span>'}</td>
+                        <td class="p-3 text-right space-x-1 whitespace-nowrap">
+                            <button onclick="editBusiness(${biz.id})" class="text-blue-600 bg-blue-50 px-2 py-1 rounded text-xs">Editar</button>
+                            <button onclick="deleteBusiness(${biz.id})" class="text-red-600 bg-red-50 px-2 py-1 rounded text-xs">Eliminar</button>
                         </td>
                     </tr>
                 `;
@@ -931,9 +924,7 @@
         }
 
         function initModalMap(lat, lng) {
-            if(modalMap) {
-                modalMap.remove();
-            }
+            if(modalMap) { modalMap.remove(); }
             modalMap = L.map('modalMap').setView([lat, lng], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap'
