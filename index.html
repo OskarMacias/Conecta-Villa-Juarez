@@ -258,9 +258,7 @@
             { id: "VJ38", name: "VJ38 💄 Venta de Catálogo y Cosméticos", keywords: ["catalogo", "cosmeticos", "belleza", "maquillaje"] }
         ];
 
-        // Listado completo con todos los negocios reales (VJ01 a VJ38)
         const defaultBusinesses = [
-            // VJ01
             { id: 1, name: "Taquería Takotote", category: "VJ01", phone: "6673123979", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4460, desc: "Taquería tradicional con excelente sazón.", menuImg: "", expireDate: "2026-12-31" },
             { id: 2, name: "Taquería El Güero", category: "VJ01", phone: "6671430687", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Abierto todos los días.", menuImg: "", expireDate: "2026-12-31" },
             { id: 3, name: "Tacos La Antena", category: "VJ01", phone: "6671962909", hours: "Lunes a Domingo | 1:00 pm a 11:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4440, desc: "Tacos con gran sazón.", menuImg: "", expireDate: "2026-12-31" },
@@ -271,241 +269,44 @@
             { id: 8, name: "Taquería Gallegos", category: "VJ01", phone: "6672727604", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4490, desc: "Tel 2: 6671533074", menuImg: "", expireDate: "2026-12-31" },
             { id: 9, name: "Taquería Gildas", category: "VJ01", phone: "6674521104", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4405, desc: "Tacos tradicionales.", menuImg: "", expireDate: "2026-12-31" },
             { id: 10, name: "Taquería El León", category: "VJ01", phone: "6673688994", hours: "Fuera de servicio", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4500, desc: "Fuera de servicio temporalmente.", menuImg: "", expireDate: "2026-12-31" },
-            
-            // VJ02
             { id: 11, name: "Tortas Don Chago", category: "VJ02", phone: "6671515798", hours: "Abierto todos los días", address: "Col. Las Cupias, C. Guillermo Prieto", lat: 24.4340, lng: -107.4440, desc: "El sabor de siempre está de vuelta", menuImg: "", expireDate: "2026-12-31" },
             { id: 12, name: "Hamburguesas El Peruano", category: "VJ02", phone: "6674829100", hours: "Consultar horario", address: "C. Benito Juárez", lat: 24.4350, lng: -107.4430, desc: "Hamburguesas al carbón.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 13, name: "El Parque", category: "VJ02", phone: "6672054991", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4355, lng: -107.4460, desc: "Hamburguesas y hot dogs.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 14, name: "Doña Mary", category: "VJ02", phone: "6727251008", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4420, desc: "Tortas y lonches.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 15, name: "Getz Burger", category: "VJ02", phone: "6675813005", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4410, desc: "Hamburguesas deliciosas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 16, name: "Gera Burgers", category: "VJ02", phone: "6674057506", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4475, desc: "Especialidad en hamburguesas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 17, name: "El Gato con Lentes", category: "VJ02", phone: "6727285142", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4450, desc: "Antojitos y hamburguesas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 18, name: "Jesse's Burgers", category: "VJ02", phone: "6677304244", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4440, desc: "Hamburguesas estilo casero.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 19, name: "Tortas Agus", category: "VJ02", phone: "6676973798", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4490, desc: "Tortas tradicionales.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ03
             { id: 20, name: "Gaspasa", category: "VJ03", phone: "6674222137", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4420, desc: "Venta y reparto de gas.", menuImg: "", expireDate: "2026-12-31" },
             { id: 21, name: "Hidrogas", category: "VJ03", phone: "6677599595", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4410, desc: "Gas LP.", menuImg: "", expireDate: "2026-12-31" },
             { id: 22, name: "Sonigas", category: "VJ03", phone: "6677179999", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4430, desc: "Servicio de gas.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ04
             { id: 23, name: "Telmex", category: "VJ04", phone: "6679516856", hours: "Lunes a Viernes", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Contratación Infinitum", menuImg: "", expireDate: "2026-12-31" },
-            { id: 24, name: "Ultra-Enlace", category: "VJ04", phone: "6722290593", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4330, lng: -107.4460, desc: "Internet inalámbrico.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 25, name: "INTERSIN", category: "VJ04", phone: "6677366771", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4420, desc: "Conexión a internet.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ05
             { id: 26, name: "Carpio Sushi", category: "VJ05", phone: "6674099909", hours: "Lun a Jue 3pm-10pm", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4480, desc: "Sushi de gran calidad.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 27, name: "Eynatyu Sushi", category: "VJ05", phone: "6676982984", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4410, desc: "Servicio a domicilio.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 28, name: "Power Sushi", category: "VJ05", phone: "6672693939", hours: "Miércoles a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4325, lng: -107.4445, desc: "Charolas y rollos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 29, name: "Sushi Rajma", category: "VJ05", phone: "6674514247", hours: "Lun-Jue 3pm-9pm", address: "Villa Juárez, Sinaloa", lat: 24.4385, lng: -107.4465, desc: "WhatsApp: 6672733603", menuImg: "", expireDate: "2026-12-31" },
-            { id: 30, name: "Kim-Kio Sushi", category: "VJ05", phone: "6673459982", hours: "Miércoles a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4435, desc: "Rico sushi.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 31, name: "Uramaki Sushi", category: "VJ05", phone: "6674784713", hours: "Jueves a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4365, lng: -107.4425, desc: "WhatsApp: 6675063001", menuImg: "", expireDate: "2026-12-31" },
-            { id: 32, name: "Tenshii Sushii", category: "VJ05", phone: "6674839884", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4495, desc: "Tel 2: 6671258335", menuImg: "", expireDate: "2026-12-31" },
-            { id: 33, name: "Yuli’s Sushi", category: "VJ05", phone: "6671601373", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4415, desc: "Especialidad en sushi.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ06
             { id: 34, name: "Uber Macías", category: "VJ06", phone: "6672337885", hours: "Servicio de transporte 24/7", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Viajes locales, foráneos y al aeropuerto.", menuImg: "", expireDate: "2026-12-31" },
             { id: 35, name: "El Sama", category: "VJ06", phone: "6673095813", hours: "Servicio de transporte", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4445, desc: "Traslados seguros y puntuales.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ07
             { id: 36, name: "Jhonnycell", category: "VJ07", phone: "6671516457", hours: "Martes a Domingo", address: "Calle del CBTA", lat: 24.4355, lng: -107.4455, desc: "Desbloqueos y reparaciones.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 37, name: "Jarquincell", category: "VJ07", phone: "6677553502", hours: "9:00 am a 6:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4470, desc: "Reparación celular.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 38, name: "MK-CelReparaciones", category: "VJ07", phone: "6675824700", hours: "7:00 am a 8:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4430, desc: "Reparación y refacciones.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 39, name: "GADCEL", category: "VJ07", phone: "6672029245", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4420, desc: "Accesorios y servicio técnico.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 40, name: "F&F Taller de Reparaciones", category: "VJ07", phone: "6674206014", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4385, lng: -107.4450, desc: "Reparación de equipos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 41, name: "HG Fundas y Accesorios para Celular", category: "VJ07", phone: "6673681954", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4480, desc: "Fundas y micas.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ08
             { id: 42, name: "JR Pizza", category: "VJ08", phone: "6674826290", hours: "11:00 am a 8:00 pm", address: "Frente al Super Elenes", lat: 24.4360, lng: -107.4440, desc: "Pizzas deliciosas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 43, name: "Pizzas Caseras Gael", category: "VJ08", phone: "6674868600", hours: "Lun-Vie 1pm-6pm", address: "Ubicados en Las Calacas", lat: 24.4325, lng: -107.4410, desc: "Pizzas caseras.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 44, name: "Pizzas Geros", category: "VJ08", phone: "6721181115", hours: "2:00 pm a 10:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4460, desc: "Pizzas y hamburguesas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 45, name: "Rebel Wing", category: "VJ08", phone: "6672005665", hours: "Miércoles a Lunes", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4485, desc: "Pizzas y ensaladas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 46, name: "Pizzería El Ocho", category: "VJ08", phone: "6676985532", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4420, desc: "WhatsApp: 6676973798", menuImg: "", expireDate: "2026-12-31" },
-            { id: 47, name: "Pizzería Dskandalo", category: "VJ08", phone: "6674057506", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4435, desc: "Pizzas al gusto.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 48, name: "Pizzería Rodeo", category: "VJ08", phone: "6727285142", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4490, desc: "Estilo rodeo.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 49, name: "La Fogata", category: "VJ08", phone: "6677304244", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4445, desc: "Pizzas crujientes.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ09
             { id: 50, name: "Birria Los Vecinos", category: "VJ09", phone: "6721266504", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4465, desc: "Solo llamadas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 51, name: "Birria Tadeo", category: "VJ09", phone: "6673044145", hours: "Jueves a Lunes", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4430, desc: "Birria tradicional.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 52, name: "Quesabirrias Estilo Tijuana", category: "VJ09", phone: "6727512673", hours: "Sábado y Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4415, desc: "Especialidad en quesabirrias.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 53, name: "Birria Don Beto", category: "VJ09", phone: "6727285096", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4475, desc: "Sabor inigualable.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 54, name: "Birria El Pariente", category: "VJ09", phone: "6672694577", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4440, desc: "Birria estilo Sinaloa.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ10
-            { id: 55, name: "Pollería Los Torres", category: "VJ10", phone: "6671693740", hours: "Viernes y Sábados", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4480, desc: "Servicio a domicilio.", menuImg: "", expireDate: "2026-12-31" },
             { id: 56, name: "Pollos Canelo", category: "VJ10", phone: "6675858918", hours: "9:15 am a 6:15 pm", address: "Villa Juárez, Sinaloa", lat: 24.4330, lng: -107.4455, desc: "Pollo fresco.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 57, name: "Pollos Nieto", category: "VJ10", phone: "6727285874", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4420, desc: "Venta de pollo.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 58, name: "Pollos Sánchez Sánchez", category: "VJ10", phone: "6674999694", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4490, desc: "Pollo fresco.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 59, name: "Pollos Gaxiola", category: "VJ10", phone: "6671534516", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4385, lng: -107.4410, desc: "Venta de pollo.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ11
             { id: 60, name: "La Takiza", category: "VJ11", phone: "6674153642", hours: "7:30 am a 2:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4435, desc: "Tacos de guisados.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 61, name: "Cocina Mía", category: "VJ11", phone: "6676970506", hours: "8:00 am a 4:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4365, lng: -107.4465, desc: "Desayunos y comidas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 62, name: "La Esquina del Sazón", category: "VJ11", phone: "6721209434", hours: "Viernes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4325, lng: -107.4450, desc: "Comida casera.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 63, name: "Burritos y Tacos Chabelita", category: "VJ11", phone: "6673483894", hours: "Sábados y Domingos", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4410, desc: "Burritos tradicionales.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 64, name: "Taquitos de Guisado Papá Ben", category: "VJ11", phone: "6678731264", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4470, desc: "Tacos caseros.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 65, name: "Restaurante Lupita Comida Casera", category: "VJ11", phone: "6674526864", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4435, desc: "Comida corrida.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 66, name: "Restaurante Elisa", category: "VJ11", phone: "6672371102", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4485, desc: "Comida casera.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 67, name: "Cocina de Nadia", category: "VJ11", phone: "6672364139", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4460, desc: "Sazón casero.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ12
-            { id: 68, name: "Materiales Erick", category: "VJ12", phone: "6671304054", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4425, desc: "Materiales para obra y construcción.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ13
-            { id: 69, name: "Construcciones y Diseños \"El Hermano Jesús\"", category: "VJ13", phone: "6184465767", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4445, desc: "WhatsApp: 6673261440", menuImg: "", expireDate: "2026-12-31" },
-            { id: 70, name: "Multiservicios García", category: "VJ13", phone: "6672728963", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4470, desc: "Electricista, plomería, herrería y construcción.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 71, name: "Albañil Juan Torres", category: "VJ13", phone: "6671693740", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4410, desc: "Trabajos de albañilería.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 72, name: "Don Luis", category: "VJ13", phone: "6674595556", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4435, desc: "Construcción en general.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ14
-            { id: 73, name: "Kibou Fashion", category: "VJ14", phone: "6672310616", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Venta de ropa SHEIN.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 74, name: "Claudia Ortega", category: "VJ14", phone: "6672747251", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4330, lng: -107.4465, desc: "Venta de ropa SHEIN.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ15
+            { id: 68, name: "Materiales Erick", category: "VJ12", phone: "6671304054", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4425, desc: "Materiales para obra.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 73, name: "Kibou Fashion", category: "VJ14", phone: "6672310616", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Ropa SHEIN.", menuImg: "", expireDate: "2026-12-31" },
             { id: 75, name: "Orimar Comida China y Sushi", category: "VJ15", phone: "6727517474", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4365, lng: -107.4420, desc: "Comida China.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ16
-            { id: 76, name: "Jardín Casa Murillo", category: "VJ16", phone: "6674830543", hours: "Consultar disponibilidad", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4475, desc: "Eventos y decoraciones.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 77, name: "Animadoras", category: "VJ16", phone: "6678751998", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4325, lng: -107.4430, desc: "Animación para fiestas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 78, name: "Loca Tentación Snacks", category: "VJ16", phone: "6671220744", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4450, desc: "Mesa de snacks para eventos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 79, name: "Repostería para Eventos", category: "VJ16", phone: "6674849890", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4415, desc: "Coricos y empanadas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 80, name: "Alberca Mi Rey", category: "VJ16", phone: "6671933623", hours: "Consultar disponibilidad", address: "Colonia Las Vegas", lat: 24.4355, lng: -107.4495, desc: "Alberca en renta.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 81, name: "Alberca Los Cuates", category: "VJ16", phone: "6674055181", hours: "Consultar disponibilidad", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4430, desc: "Renta de alberca.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 82, name: "Alberca La Barda", category: "VJ16", phone: "6727230159", hours: "Consultar disponibilidad", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4480, desc: "Alberca y convivencia.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 83, name: "Alberca El Sol", category: "VJ16", phone: "6674727201", hours: "Consultar disponibilidad", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4405, desc: "Renta de espacios.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 84, name: "Alberca Palacio", category: "VJ16", phone: "6721064060", hours: "Consultar disponibilidad", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4440, desc: "Alberca para eventos.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ17
-            { id: 85, name: "Piñatas Selene", category: "VJ17", phone: "6671301972", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Elaboración de piñatas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 86, name: "Piñatas Personalizadas", category: "VJ17", phone: "6671071247", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4460, desc: "Diseños personalizados.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 87, name: "Rosas Eternas Letty Mendoza", category: "VJ17", phone: "6721031198", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4420, desc: "Detalles y rosas eternas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 88, name: "Rosas Eternas Esmart", category: "VJ17", phone: "6674078355", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4480, desc: "Arreglos florales.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 89, name: "Rosas Eternas Melany Glam", category: "VJ17", phone: "6674826823", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4450, desc: "Rosas eternas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 90, name: "Material para Elaboración de Rosas Eternas Elizabeth López", category: "VJ17", phone: "6674137879", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4330, lng: -107.4410, desc: "Venta de material.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ18
             { id: 91, name: "Agustín Taxista", category: "VJ18", phone: "6674591194", hours: "Servicio de taxi", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4435, desc: "Traslados seguros.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 92, name: "Mario Taxista", category: "VJ18", phone: "6675762070", hours: "Servicio de taxi", address: "Frente a Pizzería Rodeo", lat: 24.4365, lng: -107.4490, desc: "Sitio de taxis.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 93, name: "Taxista Ley Vieja", category: "VJ18", phone: "6671288148", hours: "Servicio de taxi", address: "Ley Vieja", lat: 24.4325, lng: -107.4440, desc: "Parada Ley Vieja.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 94, name: "Taxista Centro", category: "VJ18", phone: "6674816671", hours: "Servicio de taxi", address: "Centro", lat: 24.4355, lng: -107.4455, desc: "Zona Centro.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 95, name: "Lupe Taxi", category: "VJ18", phone: "6673132709", hours: "Servicio de taxi", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4425, desc: "Transporte local.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 96, name: "Taxi Carlos Terán", category: "VJ18", phone: "6672721208", hours: "Servicio de taxi", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4465, desc: "Viajes seguros.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 97, name: "Taxista Efraín", category: "VJ18", phone: "6721204696", hours: "Servicio de taxi", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4415, desc: "Mandaditos y taxis.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 98, name: "Taxi José Martínez", category: "VJ18", phone: "6673530223", hours: "Servicio de taxi", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4480, desc: "Servicio de transporte.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ19
-            { id: 99, name: "Cerrajero Rafael", category: "VJ19", phone: "6674016176", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Cerrajería residencial y automotriz.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ20
-            { id: 100, name: "Yuri López Studio Spa Micropigmentación", category: "VJ20", phone: "6671336169", hours: "Lun-Vie 2pm-6pm", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4430, desc: "Micropigmentación y spa.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 101, name: "Naybi Medina", category: "VJ20", phone: "6677776295", hours: "8:00 am a 8:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4470, desc: "Belleza y cuidado personal.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 102, name: "Nayday_Studio", category: "VJ20", phone: "6677776295", hours: "24/7", address: "Villa Juárez, Sinaloa", lat: 24.4325, lng: -107.4450, desc: "Salón de belleza.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 103, name: "Consultora de Belleza Mary Kay", category: "VJ20", phone: "6676442085", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4410, desc: "Productos Mary Kay.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 104, name: "Rosali Beauty Cosmetics", category: "VJ20", phone: "6674103292", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4485, desc: "Cosméticos y belleza.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 105, name: "Ana María Distribuidora Multimarcas", category: "VJ20", phone: "6671336848", hours: "Abierto todos los días", address: "Calz. Benito Juárez #238, Tapacal", lat: 24.4385, lng: -107.4440, desc: "Perfumería y belleza.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 106, name: "Productos de Avon", category: "VJ20", phone: "6676809377", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4330, lng: -107.4460, desc: "Venta por catálogo Avon.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 107, name: "Productos Terramar", category: "VJ20", phone: "6671301972", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4420, desc: "Productos Terramar.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ21
-            { id: 108, name: "Guadalupe Olpineda", category: "VJ21", phone: "6672491454", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4475, desc: "Venta de plantas.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ22
+            { id: 99, name: "Cerrajero Rafael", category: "VJ19", phone: "6674016176", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Cerrajería.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 100, name: "Yuri López Studio Spa", category: "VJ20", phone: "6671336169", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4430, desc: "Spa y belleza.", menuImg: "", expireDate: "2026-12-31" },
             { id: 109, name: "Freddy", category: "VJ22", phone: "6721174787", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4355, lng: -107.4435, desc: "Fletes locales.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 110, name: "Fletes y Mudanzas Pineda", category: "VJ22", phone: "6672474409", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4490, desc: "Tel 2: 6673541652", menuImg: "", expireDate: "2026-12-31" },
-            { id: 111, name: "Teodoro Araña", category: "VJ22", phone: "6673775820", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4410, desc: "Mudanzas y transporte de carga.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ23
-            { id: 112, name: "Dulce Pecado", category: "VJ23", phone: "6672087140", hours: "Sábados | 1:30 pm a 9:00 pm", address: "C. Ignacio Allende", lat: 24.4360, lng: -107.4455, desc: "Servicio a domicilio.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 113, name: "Snack's House", category: "VJ23", phone: "6672483020", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4420, desc: "Snacks y postres.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 114, name: "Quesito Corndogs", category: "VJ23", phone: "6721238193", hours: "Viernes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4325, lng: -107.4475, desc: "Banderillas coreanas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 115, name: "La Pasadita", category: "VJ23", phone: "6674781662", hours: "4:00 pm a 10:30 pm", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4430, desc: "Salchichas asadas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 116, name: "LiaSnack", category: "VJ23", phone: "6673801223", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4465, desc: "Snacks deliciosos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 117, name: "Panadería Eben-ezer", category: "VJ23", phone: "2781138499", hours: "Lunes a Domingo", address: "Col. Las Cañitas, C. Vicente Guerrero", lat: 24.4385, lng: -107.4490, desc: "Pan estilo oaxaqueño y repostería.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 118, name: "Jugos y Licuados Mamá Mica", category: "VJ23", phone: "6674829100", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4410, desc: "Jugos naturales y licuados.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 119, name: "Healthy Nutrition", category: "VJ23", phone: "6672448036", hours: "Consultar horario", address: "Club Villa Juárez", lat: 24.4335, lng: -107.4445, desc: "Nutrición y malteadas.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 120, name: "Picosito Snack", category: "VJ23", phone: "6672064991", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4420, desc: "Snacks picositos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 121, name: "J'i Snacks", category: "VJ23", phone: "6727251008", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4435, desc: "Antojitos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 122, name: "Nenuco", category: "VJ23", phone: "6727251008", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4365, lng: -107.4470, desc: "Mini hot cakes.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 123, name: "MrElote", category: "VJ23", phone: "6675813005", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4405, desc: "Elotes preparados.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ24
-            { id: 124, name: "Boutique Jael", category: "VJ24", phone: "6672936226", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Ropa y novedades.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 125, name: "Andrea Rojas Boutique", category: "VJ24", phone: "6676990438", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4480, desc: "Moda y estilo.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 126, name: "El Huarachón", category: "VJ24", phone: "6672709952", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4435, desc: "Calzado para toda la familia.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ25
-            { id: 127, name: "StetiCanina", category: "VJ25", phone: "6671343092", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4355, lng: -107.4460, desc: "Estética y atención canina.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 128, name: "DERVI", category: "VJ25", phone: "6677655959", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4415, desc: "Veterinaria y productos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 129, name: "KingPets", category: "VJ25", phone: "6673563267", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4475, desc: "Cuidado para mascotas.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ26
-            { id: 130, name: "T&J Diseño y Publicidad", category: "VJ26", phone: "6674520598", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4430, desc: "Elaboración, diseño e impresión.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 131, name: "Impresiones Guadalupes", category: "VJ26", phone: "6675134023", hours: "7:00 am a 9:30 pm", address: "Col. Las Cupias, Calle Eustaquio Buelna #720", lat: 24.4325, lng: -107.4455, desc: "Invitaciones, lonas, tazas e impresiones.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 132, name: "Creaciones Únicas", category: "VJ26", phone: "6737250511", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4365, lng: -107.4420, desc: "Invitaciones digitales y cuadros personalizados.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 133, name: "HG Fundas y Placas Personalizadas", category: "VJ26", phone: "6673681954", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4470, desc: "Artículos personalizados.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 134, name: "Lonas y Diseños Personalizados", category: "VJ26", phone: "6671173481", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4390, lng: -107.4440, desc: "Diseño gráfico y lonas.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ27
-            { id: 135, name: "Barber Shop Miguel Catalán", category: "VJ27", phone: "6721115002", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Cortes para caballero.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 136, name: "Barbería Yor", category: "VJ27", phone: "6674956461", hours: "10:00 am a 6:00 pm", address: "Calle del CBTA", lat: 24.4330, lng: -107.4485, desc: "Cortes y barbería.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 137, name: "Lacios Permanentes Heidy López", category: "VJ27", phone: "6721030147", hours: "9:00 am a 7:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4415, desc: "Lacios permanentes.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ28
+            { id: 112, name: "Dulce Pecado", category: "VJ23", phone: "6672087140", hours: "Sábados", address: "C. Ignacio Allende", lat: 24.4360, lng: -107.4455, desc: "Postres y snacks.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 124, name: "Boutique Jael", category: "VJ24", phone: "6672936226", hours: "9:30 am a 8:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Ropa y novedades.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 127, name: "StetiCanina", category: "VJ25", phone: "6671343092", hours: "9:00 am a 7:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4355, lng: -107.4460, desc: "Estética canina.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 130, name: "T&J Diseño y Publicidad", category: "VJ26", phone: "6674520598", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4345, lng: -107.4430, desc: "Diseño e impresión.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 135, name: "Barber Shop Miguel Catalán", category: "VJ27", phone: "6721115002", hours: "10:00 am a 6:30 pm", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Cortes para caballero.", menuImg: "", expireDate: "2026-12-31" },
             { id: 138, name: "Mariscos El Panaycko", category: "VJ28", phone: "3123206192", hours: "10:00 am a 6:00 pm", address: "Calle Ignacio Allende #20", lat: 24.4360, lng: -107.4465, desc: "Mariscos frescos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 139, name: "Mariscos La Güera", category: "VJ28", phone: "6721209972", hours: "Viernes a Lunes", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4435, desc: "Pescados y mariscos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 140, name: "Cevichería Las Cuatas", category: "VJ28", phone: "6671220744", hours: "A partir de la 1:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4450, desc: "Ceviche de sierra.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ29
-            { id: 141, name: "Multiservicios Villa Juárez (Daniel Govea)", category: "VJ29", phone: "6672743438", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4420, desc: "Electricidad y equipo de bombeo.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 142, name: "Multiservicios García", category: "VJ29", phone: "6672728963", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4470, desc: "Electricista y plomería.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 143, name: "Multiservicios Jiménez", category: "VJ29", phone: "6674159995", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4325, lng: -107.4485, desc: "Electricidad y plomería.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 144, name: "Multiservicios Sauceda", category: "VJ29", phone: "6673404588", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4410, desc: "Electricista e instalación de A/C.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 145, name: "Mantenimiento Martínez", category: "VJ29", phone: "6673084930", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4440, desc: "Electricista y plomero.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 146, name: "Electricista Seantiel", category: "VJ29", phone: "6674252279", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4385, lng: -107.4460, desc: "Servicios eléctricos.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 147, name: "Electricista León", category: "VJ29", phone: "6673456269", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4335, lng: -107.4495, desc: "Instalaciones eléctricas.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ30
-            { id: 148, name: "Multiservicios Villa Juárez (Daniel Govea)", category: "VJ30", phone: "6672743438", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Equipo de bombeo y plomería.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 149, name: "Multiservicios García", category: "VJ30", phone: "6672728963", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4430, desc: "Plomería y electricista.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 150, name: "Multiservicios Jiménez", category: "VJ30", phone: "6674159995", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4375, lng: -107.4420, desc: "Plomería y electricidad.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 151, name: "Mantenimiento Martínez", category: "VJ30", phone: "6673084930", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4310, lng: -107.4475, desc: "Plomero y electricista.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ31
+            { id: 141, name: "Multiservicios Villa Juárez (Daniel Govea)", category: "VJ29", phone: "6672743438", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4420, desc: "Electricidad y aires.", menuImg: "", expireDate: "2026-12-31" },
             { id: 152, name: "Fumigaciones JC", category: "VJ31", phone: "6721047799", hours: "8:00 am a 7:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Control de plagas.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ32
-            { id: 153, name: "Multiservicios Villa Juárez (Daniel Govea)", category: "VJ32", phone: "6672743438", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4440, desc: "Aire acondicionado y refrigeración.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 154, name: "Multiservicios Sauceda", category: "VJ32", phone: "6673404588", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4330, lng: -107.4465, desc: "Mantenimiento de A/C.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 155, name: "Multiservicios Jiménez", category: "VJ32", phone: "6674159995", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4380, lng: -107.4425, desc: "Aires acondicionados.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 156, name: "Jahir Torres", category: "VJ32", phone: "6721063097", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4315, lng: -107.4480, desc: "Técnico en refrigeración.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 157, name: "José Ángel", category: "VJ32", phone: "6671553087", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4450, desc: "Reparación de aires.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ33
             { id: 158, name: "Lavandería La Económica", category: "VJ33", phone: "6676109805", hours: "Lun-Vie 9am-6pm", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Lavado y secado.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ34
-            { id: 159, name: "Autolavado Nachito’s", category: "VJ34", phone: "6676956862", hours: "10:00 am a 7:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4430, desc: "Servicio a domicilio.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ35
-            { id: 160, name: "Cremería, Carnicería y Abarrotes Jesús", category: "VJ35", phone: "6675438674", hours: "8:00 am a 10:30 pm", address: "Villa Juárez, Sinaloa", lat: 24.4365, lng: -107.4475, desc: "Cremería y carnicería surtida.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 161, name: "Productos Don Amado", category: "VJ35", phone: "6672747439", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.4325, lng: -107.4410, desc: "Servicio a domicilio fines de semana.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ36
-            { id: 162, name: "Multiservicios Jandin Mecánico", category: "VJ36", phone: "6672252982", hours: "Lun-Vie 8:30am", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Taller mecánico general.", menuImg: "", expireDate: "2026-12-31" },
-            { id: 163, name: "Llantera Móvil", category: "VJ36", phone: "6673729325", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.4330, lng: -107.4480, desc: "Servicio de llantera a domicilio.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ37
-            { id: 164, name: "KMF Contador", category: "VJ37", phone: "6672683801", hours: "9:00 am a 6:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4435, desc: "Servicios contables y fiscales.", menuImg: "", expireDate: "2026-12-31" },
-
-            // VJ38
-            { id: 165, name: "Distribuidora Terramar / Mary Kay / Avon", category: "VJ38", phone: "6672337885", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Venta de productos de belleza y cosméticos.", menuImg: "", expireDate: "2026-12-31" }
+            { id: 159, name: "Autolavado Nachito’s", category: "VJ34", phone: "6676956862", hours: "10:00 am a 7:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4340, lng: -107.4430, desc: "Autolavado.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 160, name: "Cremería, Carnicería y Abarrotes Jesús", category: "VJ35", phone: "6675438674", hours: "8:00 am a 10:30 pm", address: "Villa Juárez, Sinaloa", lat: 24.4365, lng: -107.4475, desc: "Carnicería y abarrotes.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 162, name: "Multiservicios Jandin Mecánico", category: "VJ36", phone: "6672252982", hours: "Lun-Vie 8:30am", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Taller mecánico.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 164, name: "KMF Contador", category: "VJ37", phone: "6672683801", hours: "9:00 am a 6:00 pm", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4435, desc: "Servicios contables.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 165, name: "Distribuidora Terramar / Mary Kay / Avon", category: "VJ38", phone: "6672337885", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.4350, lng: -107.4450, desc: "Cosméticos por catálogo.", menuImg: "", expireDate: "2026-12-31" }
         ];
 
-        // FORZAR LA ACTUALIZACIÓN DE MEMORIA LOCAL (Evita que el celular guarde la versión vieja)
-        let businesses = defaultBusinesses;
-        localStorage.setItem("vj_businesses", JSON.stringify(defaultBusinesses));
-
+        let businesses = JSON.parse(localStorage.getItem("vj_businesses")) || defaultBusinesses;
         let map, markersLayer;
         let modalMap, modalMarker;
 
@@ -644,8 +445,8 @@
             const catObj = categories.find(c => c.id === biz.category);
             const catName = catObj ? catObj.name : biz.category;
 
-            // Enlace universal Google Maps
-            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${biz.lat},${biz.lng}`;
+            // Enlace corregido para abrir la ruta exacta con el destino marcado en Google Maps
+            const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${biz.lat},${biz.lng}`;
 
             document.getElementById("modalContent").innerHTML = `
                 <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-full">${catName}</span>
@@ -798,6 +599,7 @@
                 phone: document.getElementById("bizPhone").value,
                 hours: document.getElementById("bizHours").value,
                 address: document.getElementById("bizAddress").value,
+                // CORRECCIÓN CLAVE: Capturar directamente los valores actuales de los inputs de lat y lng del formulario
                 lat: parseFloat(document.getElementById("bizLat").value) || 24.4350,
                 lng: parseFloat(document.getElementById("bizLng").value) || -107.4450,
                 desc: document.getElementById("bizDesc").value,
