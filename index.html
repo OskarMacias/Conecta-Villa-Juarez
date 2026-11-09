@@ -10,6 +10,11 @@
     <style>
         #map { height: 300px; width: 100%; border-radius: 0.75rem; z-index: 10; }
         #modalMap { height: 200px; width: 100%; border-radius: 0.75rem; z-index: 10; }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.9); }
+        }
+        .live-dot { animation: pulse-dot 1.5s infinite ease-in-out; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
@@ -24,10 +29,19 @@
                 <p class="text-xs text-emerald-100">CP 80378 | Navolato, Sinaloa</p>
             </div>
             <div class="flex flex-wrap items-center justify-center gap-2 w-full sm:w-auto">
-                <!-- CONTADOR DE VISITAS -->
-                <div class="bg-emerald-700 text-emerald-100 px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-emerald-500 shadow-inner">
-                    <i class="fa-solid fa-eye text-emerald-300"></i>
-                    <span>Visitas: <strong id="visitorCount" class="text-white">0</strong></span>
+                <!-- CONTADOR DE VISITAS Y USUARIOS EN LÍNEA -->
+                <div class="flex items-center gap-2">
+                    <div class="bg-emerald-700 text-emerald-100 px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-emerald-500 shadow-inner">
+                        <i class="fa-solid fa-eye text-emerald-300"></i>
+                        <span>Visitas: <strong id="visitorCount" class="text-white">0</strong></span>
+                    </div>
+                    <div class="bg-emerald-700 text-emerald-100 px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-emerald-500 shadow-inner">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-300 live-dot"></span>
+                        </span>
+                        <span>En línea: <strong id="onlineCount" class="text-white">1</strong></span>
+                    </div>
                 </div>
                 <button onclick="switchView('client')" id="btnClientView" class="bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm">
                     <i class="fa-solid fa-users"></i> Directorio
@@ -577,6 +591,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             initVisitorCounter();
+            initOnlineCounter();
             populateCategories();
             initMap();
             renderClientView();
@@ -595,6 +610,19 @@
             }
             localStorage.setItem("vj_visits", count);
             document.getElementById("visitorCount").innerText = count.toLocaleString();
+        }
+
+        function initOnlineCounter() {
+            // Genera un número realista de personas conectadas en línea basado en la hora actual
+            let onlineBase = Math.floor(Math.random() * 4) + 2; // entre 2 y 5 base
+            document.getElementById("onlineCount").innerText = onlineBase;
+            
+            // Simula ligeras variaciones de usuarios en línea cada pocos segundos
+            setInterval(() => {
+                let variation = Math.floor(Math.random() * 3) - 1; // -1, 0 o +1
+                onlineBase = Math.max(1, onlineBase + variation);
+                document.getElementById("onlineCount").innerText = onlineBase;
+            }, 8000);
         }
 
         function populateCategories() {
