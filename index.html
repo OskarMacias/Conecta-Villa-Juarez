@@ -65,7 +65,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, descripción (Ej. nieves, licuados)..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, descripción (Ej. nuvy, nieves)..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 </div>
                 <div>
                     <select id="categoryFilter" onchange="filterServices()" class="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
@@ -562,7 +562,7 @@
             { id: 165, name: "Distribuidora Terramar / Mary Kay / Avon", category: "VJ38", phone: "6672337885", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.6576, lng: -107.5386, desc: "Venta de productos de belleza y cosméticos.", menuImg: "", expireDate: "2026-12-31" }
         ];
 
-        // Forzar actualización total de la base de datos local limpiando la antigua si es necesario
+        // Forzar actualización total limpiando localStorage si es necesario
         let businesses = JSON.parse(localStorage.getItem("vj_businesses"));
         if (!businesses || businesses.length < defaultBusinesses.length) {
             businesses = defaultBusinesses;
@@ -670,9 +670,15 @@
             }
         }
 
+        // Función auxiliar para quitar acentos, diéresis y unificar texto de búsqueda
+        function normalizeText(text) {
+            return (text || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
         function renderClientView() {
             const container = document.getElementById("servicesContainer");
-            const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
+            const rawSearchVal = document.getElementById("searchInput").value.trim();
+            const searchVal = normalizeText(rawSearchVal);
             const catVal = document.getElementById("categoryFilter").value;
             container.innerHTML = "";
             const today = new Date().toISOString().split("T")[0];
@@ -684,11 +690,11 @@
                 
                 let matchSearch = true;
                 if(searchVal !== "") {
-                    const name = (biz.name || "").toLowerCase();
-                    const desc = (biz.desc || "").toLowerCase();
-                    const addr = (biz.address || "").toLowerCase();
+                    const name = normalizeText(biz.name);
+                    const desc = normalizeText(biz.desc);
+                    const addr = normalizeText(biz.address);
                     
-                    // Búsqueda estricta basada EXCLUSIVAMENTE en el Nombre, Descripción o Dirección del negocio individual
+                    // Búsqueda insensible a acentos, diéresis (ü por u, á por a, etc.)
                     const searchTerms = searchVal.split(/\s+/);
                     matchSearch = searchTerms.every(term => 
                         name.includes(term) || 
@@ -920,7 +926,6 @@
             document.getElementById("bizMenuImg").value = biz.menuImg || "";
             document.getElementById("bizExpireDate").value = biz.expireDate;
             
-            document.getElementById("businessModal").classList.add("hidden"); // Asegura cierre previo si aplica
             document.getElementById("businessModal").classList.remove("hidden");
             setTimeout(() => { initModalMap(biz.lat || baseLat, biz.lng || baseLng); }, 200);
         }
