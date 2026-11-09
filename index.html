@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio Villa Juárez - Servicios y Negocios</title>
+    <!-- Tailwind CSS para diseño moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS para el Mapa Interactivo -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        #map { height: 350px; width: 100%; border-radius: 0.75rem; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="bg-emerald-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
+            <div>
+                <h1 class="text-xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-store"></i> Directorio Villa Juárez
+                </h1>
+                <p class="text-xs text-emerald-100">Encuentra negocios, comida, servicios y más</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="switchView('client')" id="btnClientView" class="bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm">
+                    <i class="fa-solid fa-users"></i> Directorio
+                </button>
+                <button onclick="openAdminLogin()" id="btnAdminView" class="bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500">
+                    <i class="fa-solid fa-lock"></i> Admin
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
+
+        <!-- VISTA CLIENTE -->
+        <div id="clientView" class="space-y-6">
+            <!-- Banner de Anuncio / Contacto -->
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-4 text-white shadow flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="font-bold text-lg">📲 ¿Quieres anunciar tu negocio en esta lista?</h2>
+                    <p class="text-sm text-emerald-100">Contáctanos vía WhatsApp para aparecer en el directorio oficial.</p>
+                </div>
+                <a href="https://wa.me/526672337885?text=Hola,%20quiero%20anunciar%20mi%20negocio%20en%20el%20directorio%20de%20Villa%20Juárez" target="_blank" class="bg-white text-emerald-700 px-4 py-2 rounded-lg font-bold text-sm shadow hover:bg-emerald-50 transition whitespace-nowrap">
+                    <i class="fa-brands fa-whatsapp"></i> 667 233 7885
+                </a>
+            </div>
+
+            <!-- Buscador y Filtros -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, servicio o palabra clave..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                </div>
+                <div>
+                    <select id="categoryFilter" onchange="filterServices()" class="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                        <option value="">📁 Todas las Categorías (VJ01 - VJ38)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Mapa Interactivo -->
+            <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-sm font-semibold text-slate-700 mb-2 flex items-center gap-1">
+                    <i class="fa-solid fa-map-location-dot text-emerald-600"></i> Ubicaciones en Villa Juárez
+                </h3>
+                <div id="map"></div>
+            </div>
+
+            <!-- Listado de Servicios / Negocios -->
+            <div>
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center justify-between">
+                    <span>Negocios y Servicios Disponibles</span>
+                    <span id="counterBadge" class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">0 servicios</span>
+                </h3>
+                <div id="servicesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dinámico vía JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA ADMINISTRADOR -->
+        <div id="adminView" class="hidden space-y-6">
+            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Panel de Administración</h2>
+                    <p class="text-xs text-slate-500">Gestiona negocios, menús, ubicaciones y vigencias de suscripción.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="openBusinessModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-1">
+                        <i class="fa-solid fa-plus"></i> Nuevo Negocio
+                    </button>
+                    <button onclick="logoutAdmin()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-2 rounded-lg text-sm font-medium">
+                        Salir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabla de Negocios -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-semibold border-b border-slate-200">
+                                <th class="p-3">Negocio</th>
+                                <th class="p-3">Categoría</th>
+                                <th class="p-3">Teléfono</th>
+                                <th class="p-3">Suscripción / Vencimiento</th>
+                                <th class="p-3">Estado Público</th>
+                                <th class="p-3 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody" class="divide-y divide-slate-200 text-sm">
+                            <!-- Dinámico vía JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL DETALLE DE NEGOCIO (CLIENTE) -->
+    <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative animate-in">
+            <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 p-2 rounded-full w-9 h-9 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalContent">
+                <!-- Dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FORMULARIO ADMINISTRADOR (CREAR / EDITAR) -->
+    <div id="businessModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative">
+            <h3 id="modalTitle" class="text-lg font-bold text-slate-800 mb-4">Registrar / Editar Negocio</h3>
+            <form id="businessForm" onsubmit="saveBusiness(event)" class="space-y-4 text-sm">
+                <input type="hidden" id="bizId">
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1">Nombre del Negocio</label>
+                    <input type="text" id="bizName" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">Categoría</label>
+                        <select id="bizCategory" required class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <!-- Se llena por JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">Teléfono / WhatsApp</label>
+                        <input type="text" id="bizPhone" required placeholder="Ej. 6671234567" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1">Horario y Días</label>
+                    <input type="text" id="bizHours" placeholder="Ej. Lunes a Domingo | 2:00 pm a 10:00 pm" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1">Ubicación / Dirección</label>
+                    <input type="text" id="bizAddress" placeholder="Ej. C. Benito Juárez (Cerca del parque)" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">Latitud (Mapa)</label>
+                        <input type="number" step="any" id="bizLat" value="24.4350" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">Longitud (Mapa)</label>
+                        <input type="number" step="any" id="bizLng" value="-107.4450" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1">Descripción / Información Extra</label>
+                    <textarea id="bizDesc" rows="2" placeholder="Detalles o platillos especiales..." class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1">Enlace de Imagen del Menú o Catálogo (URL)</label>
+                    <input type="url" id="bizMenuImg" placeholder="https://ejemplo.com/menu.jpg" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                    <label class="block font-medium text-emerald-900 mb-1">Fecha de Expiración de Suscripción</label>
+                    <input type="date" id="bizExpireDate" required class="w-full p-2 bg-white border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    <p class="text-xs text-emerald-700 mt-1">Si la fecha actual supera este día, el negocio se oculta automáticamente del público.</p>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeBusinessModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg font-medium">Cancelar</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-medium shadow">Guardar Negocio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL LOGIN ADMIN -->
+    <div id="loginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+            <h3 class="text-lg font-bold text-slate-800">Acceso Administrador</h3>
+            <p class="text-xs text-slate-500">Ingresa la contraseña para administrar suscripciones.</p>
+            <input type="password" id="adminPasswordInput" placeholder="Contraseña" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            <div class="flex justify-end gap-2">
+                <button onclick="closeAdminLogin()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium">Cancelar</button>
+                <button onclick="verifyAdminPassword()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+        // Listado Oficial de las 38 Categorías de Villa Juárez
+        const categories = [
+            { id: "VJ01", name: "VJ01 🌮 Taquerías" },
+            { id: "VJ02", name: "VJ02 🍔 Hamburguesas, Hot Dogs y Tortas" },
+            { id: "VJ03", name: "VJ03 🕯️ Gas / Gasero" },
+            { id: "VJ04", name: "VJ04 📡 Internet y Wi-Fi" },
+            { id: "VJ05", name: "VJ05 🍣 Sushi" },
+            { id: "VJ06", name: "VJ06 🚗 Uber y Transporte Privado" },
+            { id: "VJ07", name: "VJ07 📱 Reparación y Accesorios para Celulares" },
+            { id: "VJ08", name: "VJ08 🍕 Pizzerías" },
+            { id: "VJ09", name: "VJ09 🍽️ Birrierías" },
+            { id: "VJ10", name: "VJ10 🐔 Pollerías" },
+            { id: "VJ11", name: "VJ11 🥣 Comida Casera" },
+            { id: "VJ12", name: "VJ12 🛠️ Materiales para Construcción" },
+            { id: "VJ13", name: "VJ13 👷 Albañilería" },
+            { id: "VJ14", name: "VJ14 👗 Ropa SHEIN" },
+            { id: "VJ15", name: "VJ15 🥡 Comida China" },
+            { id: "VJ16", name: "VJ16 🕺 Eventos, Albercas y Decoración" },
+            { id: "VJ17", name: "VJ17 🪅 Piñatas, Regalos y Florerías" },
+            { id: "VJ18", name: "VJ18 🚖 Taxis y Mandaditos 🏍️" },
+            { id: "VJ19", name: "VJ19 🔐 Cerrajería" },
+            { id: "VJ20", name: "VJ20 💄 Belleza, Maquillaje, Cejas y Pestañas" },
+            { id: "VJ21", name: "VJ21 🌱 Jardinería y Plantas" },
+            { id: "VJ22", name: "VJ22 🚚 Fletes y Mudanzas" },
+            { id: "VJ23", name: "VJ23 🥤 Jugos, Licuados, Postres y Snacks" },
+            { id: "VJ24", name: "VJ24 👗 Boutiques, Ropa y Calzado" },
+            { id: "VJ25", name: "VJ25 🐕 Veterinaria y Mascotas" },
+            { id: "VJ26", name: "VJ26 🖥️ Impresión, Lonas y Diseño" },
+            { id: "VJ27", name: "VJ27 💈 Estética y Barbería" },
+            { id: "VJ28", name: "VJ28 🦐 Marisquerías y Cevicherías" },
+            { id: "VJ29", name: "VJ29 ⚡ Electricistas" },
+            { id: "VJ30", name: "VJ30 🔧 Plomería y Fontanería" },
+            { id: "VJ31", name: "VJ31 🦂 Fumigación y Control de Plagas" },
+            { id: "VJ32", name: "VJ32 ❄️ Aire Acondicionado (Instalación y Mantenimiento)" },
+            { id: "VJ33", name: "VJ33 🫧 Lavanderías" },
+            { id: "VJ34", name: "VJ34 🚗 Autolavados" },
+            { id: "VJ35", name: "VJ35 🥩 Carnicerías y Abarrotes" },
+            { id: "VJ36", name: "VJ36 👨‍🔧 Mecánica y Llanteras" },
+            { id: "VJ37", name: "VJ37 🧮 Contadores y Asesorías Fiscales 📊" },
+            { id: "VJ38", name: "VJ38 💄 Venta de Catálogo y Cosméticos" }
+        ];
+
+        // Datos iniciales de ejemplo precargados con tus negocios reales
+        const defaultBusinesses = [
+            { id: 1, name: "Taquería Takotote", category: "VJ01", phone: "6673123979", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa", lat: 24.4360, lng: -107.4460, desc: "Taquería tradicional con excelente sazón.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 2, name: "Tortas Don Chago", category: "VJ02", phone: "6671515798", hours: "Abierto todos los días", address: "Col. Las Cupias, C. Guillermo Prieto", lat: 24.4340, lng: -107.4440, desc: "El sabor de siempre está de vuelta (Detrás de Coppel)", menuImg: "", expireDate: "2026-12-31" },
+            { id: 3, name: "Carpio Sushi", category: "VJ05", phone: "6674099909", hours: "Lun a Sáb 3:00 pm a 10:30 pm", address: "Villa Juárez, Sinaloa", lat: 24.4370, lng: -107.4480, desc: "Los mejores rollos y charolas de sushi.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 4, name: "Gaspasa", category: "VJ03", phone: "6674222137", hours: "Horario regular", address: "Villa Juárez, Sinaloa", lat: 24.4320, lng: -107.4420, desc: "Servicio de gas estacionario y cilindros.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 5, name: "Jhonnycell", category: "VJ07", phone: "6671516457", hours: "Mar a Dom 10:00 am a 6:00 pm", address: "Calle del CBTA", lat: 24.4355, lng: -107.4455, desc: "Desbloqueos, liberaciones y reparaciones de todo tipo.", menuImg: "", expireDate: "2026-12-31" }
+        ];
+
+        let businesses = JSON.parse(localStorage.getItem("vj_businesses")) || defaultBusinesses;
+        let map, markersLayer;
+
+        // Inicialización
+        document.addEventListener("DOMContentLoaded", () => {
+            populateCategories();
+            initMap();
+            renderClientView();
+        });
+
+        function populateCategories() {
+            const filterSelect = document.getElementById("categoryFilter");
+            const modalSelect = document.getElementById("bizCategory");
+            
+            categories.forEach(cat => {
+                filterSelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                modalSelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+            });
+        }
+
+        // --- MAPA LEAFLET ---
+        function initMap() {
+            map = L.map('map').setView([24.4350, -107.4450], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+            markersLayer = L.layerGroup().addTo(map);
+            updateMapMarkers();
+        }
+
+        function updateMapMarkers() {
+            if(!markersLayer) return;
+            markersLayer.clearLayers();
+            
+            const today = new Date().toISOString().split("T")[0];
+            
+            businesses.forEach(biz => {
+                // Solo mostrar en el mapa si la suscripción está vigente
+                if (biz.expireDate >= today && biz.lat && biz.lng) {
+                    const marker = L.marker([biz.lat, biz.lng]).bindPopup(`
+                        <b>${biz.name}</b><br>
+                        📞 ${biz.phone}<br>
+                        <button onclick="openDetailModal(${biz.id})" class="text-emerald-600 font-bold text-xs mt-1 underline">Ver detalles</button>
+                    `);
+                    markersLayer.addLayer(marker);
+                }
+            });
+        }
+
+        // --- VISTA CLIENTE ---
+        function renderClientView() {
+            const container = document.getElementById("servicesContainer");
+            const searchVal = document.getElementById("searchInput").value.toLowerCase();
+            const catVal = document.getElementById("categoryFilter").value;
+            
+            container.innerHTML = "";
+            const today = new Date().toISOString().split("T")[0];
+            
+            // FILTRO AUTOMÁTICO DE SUSCRIPCIÓN (Si ya venció, se oculta al público)
+            const activeBizs = businesses.filter(biz => biz.expireDate >= today);
+            
+            const filtered = activeBizs.filter(biz => {
+                const matchSearch = biz.name.toLowerCase().includes(searchVal) || 
+                                    biz.desc.toLowerCase().includes(searchVal) || 
+                                    biz.address.toLowerCase().includes(searchVal);
+                const matchCat = catVal === "" || biz.category === catVal;
+                return matchSearch && matchCat;
+            });
+
+            document.getElementById("counterBadge").innerText = `${filtered.length} servicios`;
+
+            if(filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-face-sad-tear text-4xl mb-2"></i>
+                        <p class="text-sm">No se encontraron negocios con esos criterios.</p>
+                    </div>`;
+                return;
+            }
+
+            filtered.forEach(biz => {
+                const catObj = categories.find(c => c.id === biz.category);
+                const catName = catObj ? catObj.name : biz.category;
+                
+                container.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 hover:shadow-md transition flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-full">${catName}</span>
+                            <h4 class="font-bold text-base text-slate-800 mt-2">${biz.name}</h4>
+                            <p class="text-xs text-slate-500 mt-1 flex items-center gap-1"><i class="fa-solid fa-location-dot text-emerald-600"></i> ${biz.address || 'Villa Juárez'}</p>
+                            <p class="text-xs text-slate-600 mt-2 line-clamp-2">${biz.desc || 'Servicio disponible en la zona.'}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                            <a href="tel:${biz.phone}" class="text-xs font-bold text-emerald-600 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-phone"></i> ${biz.phone}
+                            </a>
+                            <button onclick="openDetailModal(${biz.id})" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition shadow-sm">
+                                Ver Menú / Info
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            updateMapMarkers();
+        }
+
+        function filterServices() {
+            renderClientView();
+        }
+
+        function openDetailModal(id) {
+            const biz = businesses.find(b => b.id === id);
+            if(!biz) return;
+
+            const catObj = categories.find(c => c.id === biz.category);
+            const catName = catObj ? catObj.name : biz.category;
+
+            document.getElementById("modalContent").innerHTML = `
+                <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-full">${catName}</span>
+                <h3 class="text-xl font-bold text-slate-900 mt-2">${biz.name}</h3>
+                <p class="text-sm text-slate-600 mt-1"><i class="fa-solid fa-clock text-emerald-600 mr-1"></i> ${biz.hours || 'Consultar horarios'}</p>
+                <p class="text-sm text-slate-600 mt-1"><i class="fa-solid fa-location-dot text-emerald-600 mr-1"></i> ${biz.address || 'Villa Juárez'}</p>
+                <p class="text-sm text-slate-700 mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200">${biz.desc || 'Sin descripción adicional.'}</p>
+                
+                ${biz.menuImg ? `<div class="mt-4"><p class="text-xs font-semibold text-slate-700 mb-1">Menú / Catálogo:</p><img src="${biz.menuImg}" class="w-full rounded-xl border border-slate-200 max-h-60 object-cover"></div>` : ''}
+                
+                <div class="mt-6 flex gap-2">
+                    <a href="tel:${biz.phone}" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center py-2.5 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-phone"></i> Llamar
+                    </a>
+                    <a href="https://wa.me/52${biz.phone.replace(/\D/g,'')}?text=Hola,%20vi%20su%20negocio%20en%20el%20Directorio%20de%20Villa%20Juárez%20y%20quiero%20más%20información." target="_blank" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white text-center py-2.5 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            `;
+            document.getElementById("detailModal").classList.remove("hidden");
+        }
+
+        function closeDetailModal() {
+            document.getElementById("detailModal").classList.add("hidden");
+        }
+
+        // --- MODO ADMINISTRADOR Y SUSCRIPCIONES ---
+        function switchView(view) {
+            if(view === 'client') {
+                document.getElementById("clientView").classList.remove("hidden");
+                document.getElementById("adminView").classList.add("hidden");
+                document.getElementById("btnClientView").className = "bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm";
+                document.getElementById("btnAdminView").className = "bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500";
+            }
+        }
+
+        function openAdminLogin() {
+            document.getElementById("adminPasswordInput").value = "";
+            document.getElementById("loginModal").classList.remove("hidden");
+        }
+
+        function closeAdminLogin() {
+            document.getElementById("loginModal").classList.add("hidden");
+        }
+
+        function verifyAdminPassword() {
+            const pass = document.getElementById("adminPasswordInput").value;
+            // Contraseña de administrador por defecto (puedes cambiarla aquí)
+            if(pass === "admin123") {
+                closeAdminLogin();
+                document.getElementById("clientView").classList.add("hidden");
+                document.getElementById("adminView").classList.remove("hidden");
+                document.getElementById("btnAdminView").className = "bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm";
+                document.getElementById("btnClientView").className = "bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500";
+                renderAdminTable();
+            } else {
+                alert("Contraseña incorrecta.");
+            }
+        }
+
+        function logoutAdmin() {
+            switchView('client');
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById("adminTableBody");
+            tbody.innerHTML = "";
+            const today = new Date().toISOString().split("T")[0];
+
+            businesses.forEach(biz => {
+                const isExpired = biz.expireDate < today;
+                const catObj = categories.find(c => c.id === biz.category);
+                const catName = catObj ? catObj.name : biz.category;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="p-3 font-semibold text-slate-800">${biz.name}</td>
+                        <td class="p-3 text-slate-600 text-xs">${catName}</td>
+                        <td class="p-3 text-slate-600">${biz.phone}</td>
+                        <td class="p-3">
+                            <span class="font-mono text-xs">${biz.expireDate}</span>
+                        </td>
+                        <td class="p-3">
+                            ${isExpired ? 
+                                '<span class="bg-red-100 text-red-700 text-xs px-2.5 py-1 rounded-full font-semibold">🔴 Oculto (Vencido)</span>' : 
+                                '<span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-semibold">🟢 Visible (Activo)</span>'}
+                        </td>
+                        <td class="p-3 text-right space-x-2">
+                            <button onclick="editBusiness(${biz.id})" class="text-blue-600 hover:text-blue-800 font-medium text-xs bg-blue-50 px-2.5 py-1.5 rounded-lg"><i class="fa-solid fa-pen"></i> Editar</button>
+                            <button onclick="deleteBusiness(${biz.id})" class="text-red-600 hover:text-red-800 font-medium text-xs bg-red-50 px-2.5 py-1.5 rounded-lg"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openBusinessModal() {
+            document.getElementById("modalTitle").innerText = "Registrar Nuevo Negocio";
+            document.getElementById("businessForm").reset();
+            document.getElementById("bizId").value = "";
+            
+            // Fecha por defecto 1 mes adelante
+            let nextMonth = new Date();
+            nextMonth.setMonth(nextMonth.getMonth() + 1);
+            document.getElementById("bizExpireDate").value = nextMonth.toISOString().split("T")[0];
+            
+            document.getElementById("businessModal").classList.remove("hidden");
+        }
+
+        function closeBusinessModal() {
+            document.getElementById("businessModal").classList.add("hidden");
+        }
+
+        function editBusiness(id) {
+            const biz = businesses.find(b => b.id === id);
+            if(!biz) return;
+
+            document.getElementById("modalTitle").innerText = "Editar Negocio";
+            document.getElementById("bizId").value = biz.id;
+            document.getElementById("bizName").value = biz.name;
+            document.getElementById("bizCategory").value = biz.category;
+            document.getElementById("bizPhone").value = biz.phone;
+            document.getElementById("bizHours").value = biz.hours || "";
+            document.getElementById("bizAddress").value = biz.address || "";
+            document.getElementById("bizLat").value = biz.lat || 24.4350;
+            document.getElementById("bizLng").value = biz.lng || -107.4450;
+            document.getElementById("bizDesc").value = biz.desc || "";
+            document.getElementById("bizMenuImg").value = biz.menuImg || "";
+            document.getElementById("bizExpireDate").value = biz.expireDate;
+
+            document.getElementById("businessModal").classList.remove("hidden");
+        }
+
+        function saveBusiness(e) {
+            e.preventDefault();
+            const id = document.getElementById("bizId").value;
+            const bizData = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById("bizName").value,
+                category: document.getElementById("bizCategory").value,
+                phone: document.getElementById("bizPhone").value,
+                hours: document.getElementById("bizHours").value,
+                address: document.getElementById("bizAddress").value,
+                lat: parseFloat(document.getElementById("bizLat").value) || 24.4350,
+                lng: parseFloat(document.getElementById("bizLng").value) || -107.4450,
+                desc: document.getElementById("bizDesc").value,
+                menuImg: document.getElementById("bizMenuImg").value,
+                expireDate: document.getElementById("bizExpireDate").value
+            };
+
+            if(id) {
+                const index = businesses.findIndex(b => b.id == id);
+                if(index !== -1) businesses[index] = bizData;
+            } else {
+                businesses.push(bizData);
+            }
+
+            localStorage.setItem("vj_businesses", JSON.stringify(businesses));
+            closeBusinessModal();
+            renderAdminTable();
+            renderClientView();
+            alert("¡Negocio guardado con éxito!");
+        }
+
+        function deleteBusiness(id) {
+            if(confirm("¿Estás seguro de eliminar este negocio del sistema?")) {
+                businesses = businesses.filter(b => b.id !== id);
+                localStorage.setItem("vj_businesses", JSON.stringify(businesses));
+                renderAdminTable();
+                renderClientView();
+            }
+        }
+    </script>
+</body>
+</html>
