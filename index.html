@@ -240,7 +240,7 @@
             { id: "VJ20", name: "VJ20 💄 Belleza, Maquillaje, Cejas y Pestañas", keywords: ["belleza", "maquillaje", "cejas", "pestanas", "spa", "uñas", "cosmeticos", "mary kay", "avon", "terramar", "perfume"] },
             { id: "VJ21", name: "VJ21 🌱 Jardinería y Plantas", keywords: ["jardin", "jardineria", "planta", "plantas", "vivero"] },
             { id: "VJ22", name: "VJ22 🚚 Fletes y Mudanzas", keywords: ["flete", "fletes", "mudanza", "mudanzas", "carga", "transporte de carga"] },
-            { id: "VJ23", name: "VJ23 🥤 Jugos, Licuados, Postres y Snacks", keywords: ["jugo", "jugos", "licuado", "licuados", "postre", "postres", "snack", "snacks", "elote", "pan", "panaderia", "banderillas", "corndogs"] },
+            { id: "VJ23", name: "VJ23 🥤 Jugos, Licuados, Postres y Snacks", keywords: ["jugo", "jugos", "licuado", "licuados", "postre", "postres", "snack", "snacks", "elote", "pan", "panaderia", "banderillas", "corndogs", "nieve", "nieves", "neveria", "topping", "toppings"] },
             { id: "VJ24", name: "VJ24 👗 Boutiques, Ropa y Calzado", keywords: ["boutique", "ropa", "calzado", "zapato", "huarache", "jael", "andrea"] },
             { id: "VJ25", name: "VJ25 🐕 Veterinaria y Mascotas", keywords: ["veterinaria", "mascota", "mascotas", "perro", "gato", "estetica canina", "steticanina", "dervi"] },
             { id: "VJ26", name: "VJ26 🖥️ Impresión, Lonas y Diseño", keywords: ["impresion", "impresiones", "lona", "lonas", "diseno", "invitaciones", "publicidad", "playeras", "tazas"] },
@@ -258,7 +258,7 @@
             { id: "VJ38", name: "VJ38 💄 Venta de Catálogo y Cosméticos", keywords: ["catalogo", "cosmeticos", "belleza", "maquillaje"] }
         ];
 
-        // Coordenadas base reales de Villa Juárez tomadas de tu captura: 24.657617, -107.538643[span_3](start_span)[span_3](end_span)
+        // Coordenadas base reales de Villa Juárez: 24.657617, -107.538643[span_0](start_span)[span_0](end_span)
         const baseLat = 24.657617;
         const baseLng = -107.538643;
 
@@ -504,9 +504,12 @@
             { id: 165, name: "Distribuidora Terramar / Mary Kay / Avon", category: "VJ38", phone: "6672337885", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.6576, lng: -107.5386, desc: "Venta de productos de belleza y cosméticos.", menuImg: "", expireDate: "2026-12-31" }
         ];
 
-        // Forzar actualización inmediata en el navegador y limpiar memoria previa
-        let businesses = defaultBusinesses;
-        localStorage.setItem("vj_businesses", JSON.stringify(defaultBusinesses));
+        // Cargar negocios guardados sin sobrescribir los nuevos registros del admin
+        let businesses = JSON.parse(localStorage.getItem("vj_businesses"));
+        if (!businesses || businesses.length === 0) {
+            businesses = defaultBusinesses;
+            localStorage.setItem("vj_businesses", JSON.stringify(defaultBusinesses));
+        }
 
         let map, markersLayer;
         let modalMap, modalMarker;
@@ -539,7 +542,6 @@
         }
 
         function initMap() {
-            // Centrado exacto en Villa Juárez con las coordenadas reales
             map = L.map('map').setView([baseLat, baseLng], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap'
@@ -598,7 +600,7 @@
                     
                     let keywordMatch = false;
                     if(catObj && catObj.keywords) {
-                        keywordMatch = catObj.keywords.some(kw => searchVal === kw || searchVal.split(" ").includes(kw));
+                        keywordMatch = catObj.keywords.some(kw => searchVal.includes(kw) || kw.includes(searchVal));
                     }
                     
                     matchSearch = nameMatch || descMatch || addrMatch || catNameMatch || keywordMatch;
@@ -760,8 +762,9 @@
             document.getElementById("bizMenuImg").value = biz.menuImg || "";
             document.getElementById("bizExpireDate").value = biz.expireDate;
             
-            document.getElementById("businessModal").classList.remove("hidden");
+            document.getElementById("businessModal").classList.add("hidden");
             setTimeout(() => { initModalMap(biz.lat || baseLat, biz.lng || baseLng); }, 200);
+            document.getElementById("businessModal").classList.remove("hidden");
         }
 
         function initModalMap(lat, lng) {
