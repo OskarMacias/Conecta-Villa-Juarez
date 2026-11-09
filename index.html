@@ -40,7 +40,12 @@
     </header>
 
     <!-- MAIN -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 space-y-6">
+
+        <!-- BANNER DE PUBLICIDAD / PROMOCIÓN DINÁMICO -->
+        <div id="promoBannerContainer" class="hidden rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-white">
+            <div id="promoContent" class="relative w-full"></div>
+        </div>
 
         <!-- VISTA CLIENTE -->
         <div id="clientView" class="space-y-6">
@@ -60,7 +65,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, servicio (Ej. Uber, tacos)..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    <input type="text" id="searchInput" oninput="filterServices()" placeholder="Buscar negocio, platillo, servicio (Ej. Uber, nieves)..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 </div>
                 <div>
                     <select id="categoryFilter" onchange="filterServices()" class="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
@@ -94,12 +99,18 @@
 
         <!-- VISTA ADMINISTRADOR -->
         <div id="adminView" class="hidden space-y-6">
-            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200 gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-slate-800">Panel de Administración</h2>
-                    <p class="text-xs text-slate-500">Gestión de suscripciones mensuales y ubicaciones de los negocios.</p>
+                    <p class="text-xs text-slate-500">Gestión de suscripciones, publicidad superior y ubicaciones.</p>
                 </div>
-                <div class="flex gap-2">
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="openPromoModal()" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-1">
+                        <i class="fa-solid fa-bullhorn"></i> Gestionar Publicidad
+                    </button>
+                    <button onclick="openPasswordModal()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-1">
+                        <i class="fa-solid fa-key"></i> Cambiar Contraseña
+                    </button>
                     <button onclick="openBusinessModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-1">
                         <i class="fa-solid fa-plus"></i> Nuevo Negocio
                     </button>
@@ -202,11 +213,58 @@
         </div>
     </div>
 
+    <!-- MODAL CAMBIAR CONTRASEÑA -->
+    <div id="passwordModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+            <h3 class="text-lg font-bold text-slate-800">Cambiar Contraseña</h3>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 mb-1">Nueva Contraseña</label>
+                <input type="password" id="newPasswordInput" placeholder="Nueva contraseña" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closePasswordModal()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm">Cancelar</button>
+                <button onclick="saveNewPassword()" class="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL GESTIONAR PUBLICIDAD -->
+    <div id="promoModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <h3 class="text-lg font-bold text-slate-800">Gestionar Banner Publicitario (Superior)</h3>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 mb-1">Tipo de Contenido</label>
+                <select id="promoType" onchange="togglePromoInputs()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+                    <option value="none">Sin Publicidad (Oculto)</option>
+                    <option value="image">Imagen (URL)</option>
+                    <option value="video">Video (URL MP4 o enlace directo)</option>
+                    <option value="html">Texto / HTML Personalizado</option>
+                </select>
+            </div>
+            <div id="promoUrlContainer" class="hidden">
+                <label class="block text-xs font-medium text-slate-700 mb-1">Enlace del Archivo (URL de Imagen o Video)</label>
+                <input type="url" id="promoUrl" placeholder="https://ejemplo.com/imagen.jpg" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div id="promoHtmlContainer" class="hidden">
+                <label class="block text-xs font-medium text-slate-700 mb-1">Código HTML o Texto del Anuncio</label>
+                <textarea id="promoHtmlText" rows="3" placeholder="Escribe tu anuncio aquí..." class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm"></textarea>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-700 mb-1">Enlace de Destino al hacer clic (Opcional)</label>
+                <input type="url" id="promoLink" placeholder="https://wa.me/..." class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closePromoModal()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm">Cancelar</button>
+                <button onclick="savePromoBanner()" class="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm">Guardar Publicidad</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL LOGIN -->
     <div id="loginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
             <h3 class="text-lg font-bold text-slate-800">Acceso Administrador</h3>
-            <input type="password" id="adminPasswordInput" placeholder="Contraseña (admin123)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
+            <input type="password" id="adminPasswordInput" placeholder="Contraseña" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm">
             <div class="flex justify-end gap-2">
                 <button onclick="closeAdminLogin()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm">Cancelar</button>
                 <button onclick="verifyAdminPassword()" class="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm">Entrar</button>
@@ -240,7 +298,7 @@
             { id: "VJ20", name: "VJ20 💄 Belleza, Maquillaje, Cejas y Pestañas", keywords: ["belleza", "maquillaje", "cejas", "pestanas", "spa", "uñas", "cosmeticos", "mary kay", "avon", "terramar", "perfume"] },
             { id: "VJ21", name: "VJ21 🌱 Jardinería y Plantas", keywords: ["jardin", "jardineria", "planta", "plantas", "vivero"] },
             { id: "VJ22", name: "VJ22 🚚 Fletes y Mudanzas", keywords: ["flete", "fletes", "mudanza", "mudanzas", "carga", "transporte de carga"] },
-            { id: "VJ23", name: "VJ23 🥤 Jugos, Licuados, Postres y Snacks", keywords: ["jugo", "jugos", "licuado", "licuados", "postre", "postres", "snack", "snacks", "elote", "pan", "panaderia", "banderillas", "corndogs", "nieve", "nieves", "neveria", "topping", "toppings"] },
+            { id: "VJ23", name: "VJ23 🥤 Jugos, Licuados, Postres y Snacks", keywords: ["jugo", "jugos", "licuado", "licuados", "postre", "postres", "snack", "snacks", "elote", "pan", "panaderia", "banderillas", "corndogs", "nieve", "nieves", "neveria", "topping", "toppings", "nuvy"] },
             { id: "VJ24", name: "VJ24 👗 Boutiques, Ropa y Calzado", keywords: ["boutique", "ropa", "calzado", "zapato", "huarache", "jael", "andrea"] },
             { id: "VJ25", name: "VJ25 🐕 Veterinaria y Mascotas", keywords: ["veterinaria", "mascota", "mascotas", "perro", "gato", "estetica canina", "steticanina", "dervi"] },
             { id: "VJ26", name: "VJ26 🖥️ Impresión, Lonas y Diseño", keywords: ["impresion", "impresiones", "lona", "lonas", "diseno", "invitaciones", "publicidad", "playeras", "tazas"] },
@@ -258,7 +316,6 @@
             { id: "VJ38", name: "VJ38 💄 Venta de Catálogo y Cosméticos", keywords: ["catalogo", "cosmeticos", "belleza", "maquillaje"] }
         ];
 
-        // Coordenadas base reales de Villa Juárez: 24.657617, -107.538643[span_0](start_span)[span_0](end_span)
         const baseLat = 24.657617;
         const baseLng = -107.538643;
 
@@ -430,6 +487,7 @@
             { id: 121, name: "J'i Snacks", category: "VJ23", phone: "6727251008", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.6586, lng: -107.5400, desc: "Antojitos.", menuImg: "", expireDate: "2026-12-31" },
             { id: 122, name: "Nenuco", category: "VJ23", phone: "6727251008", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.6574, lng: -107.5384, desc: "Mini hot cakes.", menuImg: "", expireDate: "2026-12-31" },
             { id: 123, name: "MrElote", category: "VJ23", phone: "6675813005", hours: "Consultar horario", address: "Villa Juárez, Sinaloa", lat: 24.6576, lng: -107.5388, desc: "Elotes preparados.", menuImg: "", expireDate: "2026-12-31" },
+            { id: 166, name: "NÜVY Nieves & Toppings", category: "VJ23", phone: "6674195767", hours: "Abierto todos los días", address: "Villa Juárez, Sinaloa (CP 80378)", lat: 24.657617, lng: -107.538643, desc: "Nieves artesanales y toppings deliciosos.", menuImg: "", expireDate: "2027-01-31" },
 
             // VJ24
             { id: 124, name: "Boutique Jael", category: "VJ24", phone: "6672936226", hours: "Lunes a Domingo", address: "Villa Juárez, Sinaloa", lat: 24.6576, lng: -107.5386, desc: "Ropa y novedades.", menuImg: "", expireDate: "2026-12-31" },
@@ -504,12 +562,15 @@
             { id: 165, name: "Distribuidora Terramar / Mary Kay / Avon", category: "VJ38", phone: "6672337885", hours: "Lunes a Sábado", address: "Villa Juárez, Sinaloa", lat: 24.6576, lng: -107.5386, desc: "Venta de productos de belleza y cosméticos.", menuImg: "", expireDate: "2026-12-31" }
         ];
 
-        // Cargar negocios guardados sin sobrescribir los nuevos registros del admin
         let businesses = JSON.parse(localStorage.getItem("vj_businesses"));
         if (!businesses || businesses.length === 0) {
             businesses = defaultBusinesses;
             localStorage.setItem("vj_businesses", JSON.stringify(defaultBusinesses));
         }
+
+        let adminPassword = localStorage.getItem("vj_admin_pass") || "admin123";
+        let isAdminLoggedIn = localStorage.getItem("vj_is_admin") === "true";
+        let promoConfig = JSON.parse(localStorage.getItem("vj_promo")) || { type: "none", url: "", html: "", link: "" };
 
         let map, markersLayer;
         let modalMap, modalMarker;
@@ -519,6 +580,10 @@
             populateCategories();
             initMap();
             renderClientView();
+            renderPromoBanner();
+            if(isAdminLoggedIn) {
+                document.getElementById("btnAdminView").classList.add("bg-emerald-700");
+            }
         });
 
         function initVisitorCounter() {
@@ -578,6 +643,32 @@
             });
         }
 
+        function renderPromoBanner() {
+            const container = document.getElementById("promoBannerContainer");
+            const content = document.getElementById("promoContent");
+            if(!promoConfig || promoConfig.type === "none") {
+                container.classList.add("hidden");
+                return;
+            }
+
+            container.classList.remove("hidden");
+            let innerHtml = "";
+
+            if(promoConfig.type === "image") {
+                innerHtml = `<img src="${promoConfig.url}" class="w-full max-h-48 sm:max-h-64 object-cover">`;
+            } else if(promoConfig.type === "video") {
+                innerHtml = `<video src="${promoConfig.url}" autoplay muted loop playsinline class="w-full max-h-48 sm:max-h-64 object-cover"></video>`;
+            } else if(promoConfig.type === "html") {
+                innerHtml = `<div class="p-4 bg-emerald-50 text-emerald-900 font-medium text-center">${promoConfig.html}</div>`;
+            }
+
+            if(promoConfig.link) {
+                content.innerHTML = `<a href="${promoConfig.link}" target="_blank" class="block hover:opacity-95 transition">${innerHtml}</a>`;
+            } else {
+                content.innerHTML = innerHtml;
+            }
+        }
+
         function renderClientView() {
             const container = document.getElementById("servicesContainer");
             const searchVal = document.getElementById("searchInput").value.toLowerCase().trim();
@@ -600,10 +691,19 @@
                     
                     let keywordMatch = false;
                     if(catObj && catObj.keywords) {
-                        keywordMatch = catObj.keywords.some(kw => searchVal.includes(kw) || kw.includes(searchVal));
+                        keywordMatch = catObj.keywords.some(kw => searchVal.includes(kw) || kw.includes(searchVal) || nameMatch || descMatch);
                     }
                     
-                    matchSearch = nameMatch || descMatch || addrMatch || catNameMatch || keywordMatch;
+                    // Búsqueda inteligente por similitud / aproximación de palabras
+                    const searchTerms = searchVal.split(" ");
+                    const fuzzyMatch = searchTerms.every(term => 
+                        biz.name.toLowerCase().includes(term) || 
+                        biz.desc.toLowerCase().includes(term) || 
+                        (catObj && catObj.name.toLowerCase().includes(term)) ||
+                        (catObj && catObj.keywords && catObj.keywords.some(k => k.includes(term)))
+                    );
+
+                    matchSearch = nameMatch || descMatch || addrMatch || catNameMatch || keywordMatch || fuzzyMatch;
                 }
 
                 return matchSearch && matchCat;
@@ -691,21 +791,86 @@
             }
         }
 
-        function openAdminLogin() { document.getElementById("loginModal").classList.remove("hidden"); }
+        function openAdminLogin() {
+            if(isAdminLoggedIn) {
+                document.getElementById("clientView").classList.add("hidden");
+                document.getElementById("adminView").classList.remove("hidden");
+                renderAdminTable();
+            } else {
+                document.getElementById("loginModal").classList.remove("hidden");
+            }
+        }
+
         function closeAdminLogin() { document.getElementById("loginModal").classList.add("hidden"); }
 
         function verifyAdminPassword() {
-            if(document.getElementById("adminPasswordInput").value === "admin123") {
+            const entered = document.getElementById("adminPasswordInput").value;
+            if(entered === adminPassword) {
+                isAdminLoggedIn = true;
+                localStorage.setItem("vj_is_admin", "true");
                 closeAdminLogin();
                 document.getElementById("clientView").classList.add("hidden");
                 document.getElementById("adminView").classList.remove("hidden");
-                document.getElementById("btnAdminView").className = "bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-800 flex items-center gap-1 shadow-sm";
-                document.getElementById("btnClientView").className = "bg-emerald-800 text-emerald-100 px-3 py-1.5 rounded-lg text-sm font-medium transition hover:bg-emerald-700 flex items-center gap-1 border border-emerald-500";
                 renderAdminTable();
-            } else { alert("Contraseña incorrecta."); }
+            } else { 
+                alert("Contraseña incorrecta."); 
+            }
         }
 
-        function logoutAdmin() { switchView('client'); }
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            localStorage.removeItem("vj_is_admin");
+            switchView('client');
+        }
+
+        function openPasswordModal() { document.getElementById("passwordModal").classList.remove("hidden"); }
+        function closePasswordModal() { document.getElementById("passwordModal").classList.add("hidden"); }
+
+        function saveNewPassword() {
+            const newPass = document.getElementById("newPasswordInput").value.trim();
+            if(!newPass) {
+                alert("Escribe una contraseña válida.");
+                return;
+            }
+            adminPassword = newPass;
+            localStorage.setItem("vj_admin_pass", newPass);
+            closePasswordModal();
+            alert("¡Contraseña actualizada con éxito!");
+        }
+
+        function openPromoModal() {
+            document.getElementById("promoType").value = promoConfig.type;
+            document.getElementById("promoUrl").value = promoConfig.url || "";
+            document.getElementById("promoHtmlText").value = promoConfig.html || "";
+            document.getElementById("promoLink").value = promoConfig.link || "";
+            togglePromoInputs();
+            document.getElementById("promoModal").classList.remove("hidden");
+        }
+
+        function closePromoModal() { document.getElementById("promoModal").classList.add("hidden"); }
+
+        function togglePromoInputs() {
+            const type = document.getElementById("promoType").value;
+            const urlContainer = document.getElementById("promoUrlContainer");
+            const htmlContainer = document.getElementById("promoHtmlContainer");
+            urlContainer.classList.add("hidden");
+            htmlContainer.classList.add("hidden");
+            if(type === "image" || type === "video") urlContainer.classList.remove("hidden");
+            if(type === "html") htmlContainer.classList.remove("hidden");
+        }
+
+        function savePromoBanner() {
+            promoConfig = {
+                type: document.getElementById("promoType").value,
+                url: document.getElementById("promoUrl").value,
+                html: document.getElementById("promoHtmlText").value,
+                link: document.getElementById("promoLink").value
+            };
+            localStorage.setItem("vj_promo", JSON.stringify(promoConfig));
+            closePromoModal();
+            renderPromoBanner();
+            alert("¡Publicidad actualizada con éxito!");
+        }
 
         function renderAdminTable() {
             const tbody = document.getElementById("adminTableBody");
@@ -762,9 +927,8 @@
             document.getElementById("bizMenuImg").value = biz.menuImg || "";
             document.getElementById("bizExpireDate").value = biz.expireDate;
             
-            document.getElementById("businessModal").classList.add("hidden");
-            setTimeout(() => { initModalMap(biz.lat || baseLat, biz.lng || baseLng); }, 200);
             document.getElementById("businessModal").classList.remove("hidden");
+            setTimeout(() => { initModalMap(biz.lat || baseLat, biz.lng || baseLng); }, 200);
         }
 
         function initModalMap(lat, lng) {
